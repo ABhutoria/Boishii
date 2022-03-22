@@ -6,5 +6,28 @@
 
 
 {% block body %}
-<h1> Template</h1>
+<br />
+<h1 class="title_box">Boishii Mobile Menu</h1>
+<br />
+<br />
+<div class="boishii_form">
+    <form class="text-center">
+        <label for="cust_name">Customer Name:</label>
+        <br />
+        <input type="text" id="cust_name" name="cust_name">
+        <br />
+        <br />
+        <label for="table_num">Table No.:</label>
+        <br />
+        <input type="text" id="table_num" name="table_num">
+        <br />
+        <br />
+        <label for="restaurant_id">Restaurant ID (Ask your server):</label>
+        <br />
+        <input type="text" id="restaurant_id" name="restaurant_id">
+        <br />
+        <br />
+        <input type="submit" value="Submit">
+    </form>
+</div>
 {% endblock %}
