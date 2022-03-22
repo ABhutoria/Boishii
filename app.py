@@ -9,9 +9,7 @@ db = SQLAlchemy(app)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
-
-
+    return render_template('index.html', title="Boishii Mobile Menu | Home")
 
 
 class Todo(db.Model):
