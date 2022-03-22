@@ -2,7 +2,67 @@ body{
 
     margin: 0;
     
-    font-family: sans-serif;
+    font-family: 'Righteous', cursive;
 
-
+    background-image: url('../img/boishii_bg.png');
+    background-size: 100%;
 }
+
+h1 {
+    text-align: center;
+    font-family: 'Righteous', cursive;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.boishii_form {
+    border: 5px groove black;
+    border-radius: 8px;
+    box-sizing: border-box;
+    padding: 5px;
+    width: 30%;
+    margin: auto;
+    flex: 1 1 auto;
+    background: rgb(162,161,159);
+    background: linear-gradient(90deg, rgba(162,161,159,1) 15%, rgba(220,216,209,1) 50%, rgba(162,161,159,1) 85%); 
+}
+
+.boishii_bg {
+    background: rgb(246,209,144);
+    background: linear-gradient(90deg, rgba(246,209,144,1) 15%, rgba(251,162,0,0.9352474266073617) 50%, rgba(246,209,144,1) 85%); 
+}
+
+.title_box {
+    border: 5px groove black;
+    border-radius: 8px;
+    padding: 5px;
+    background: rgb(246,209,144);
+    background: linear-gradient(90deg, rgba(246,209,144,1) 15%, rgba(251,162,0,0.9352474266073617) 50%, rgba(246,209,144,1) 85%); 
+    width: 20%;
+    margin: auto;
+}
+
+.submit_btn {
+    background-color: #08d;
+    border-radius: 12px;
+    border: 0;
+    box-sizing: border-box;
+    color: #eee;
+    cursor: pointer;
+    font-size: 18px;
+    font-family: 'Righteous', cursive;
+    height: 30px;
+    text-align: center;
+    width: 50%;
+}
+
+.input_box {
+    border-radius: 8px;
+    width: 75%;
+    height: 20px;
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
