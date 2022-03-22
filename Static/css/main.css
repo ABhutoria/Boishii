@@ -20,6 +20,7 @@ h1 {
 .boishii_form {
     border: 5px groove black;
     border-radius: 8px;
+    box-sizing: border-box;
     padding: 5px;
     width: 30%;
     margin: auto;
@@ -42,5 +43,26 @@ h1 {
     width: 20%;
     margin: auto;
 }
+
+.submit_btn {
+    background-color: #08d;
+    border-radius: 12px;
+    border: 0;
+    box-sizing: border-box;
+    color: #eee;
+    cursor: pointer;
+    font-size: 18px;
+    font-family: 'Righteous', cursive;
+    height: 30px;
+    text-align: center;
+    width: 50%;
+}
+
+.input_box {
+    border-radius: 8px;
+    width: 75%;
+    height: 20px;
+}
+
 
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
