@@ -11,7 +11,7 @@ class Config:
 
     # Change once ready for production
     DEBUG = True
-    TESTING = True
+    ENV = 'development'
 
     SQLALCHEMY_DATABASE_URI =  environ.get('SQLALCHEMY_DATABASE_URI')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
