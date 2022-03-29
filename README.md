@@ -1,5 +1,5 @@
 # Boishii
-A Webapp for customers to order food at resturants
+A Webapp for customers to order food at restaurants.
 
 ### To install dependencies:
 

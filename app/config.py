@@ -13,7 +13,7 @@ class Config:
     DEBUG = True
     ENV = 'development'
 
-    SQLALCHEMY_DATABASE_URI =  environ.get('SQLALCHEMY_DATABASE_URI')
+    SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
     
