@@ -7,7 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="styleSheet" href="{{ url_for('static', filename = 'css/order-styles.css') }}">
-    <script src="{{ url_for('static', filename = 'js/order.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'js/order.js') }}" async></script>
+    <!--<script src="store.js" async></script>-->
 </head>
 
 <body>
@@ -48,4 +49,20 @@
             </section>
         </div>
     </main>
+    <!--Adapted from: https://github.com/WebDevSimplified/Introduction-to-Web-Development/blob/master/Introduction%20to%20JavaScript/Lesson%201/store.html--> 
+    <section class="container content-section">
+        <h2 class="section-header">ORDER</h2>
+        <div class="order-row">
+            <span class="order-item order-header order-column">ITEM</span>
+            <span class="order-price order-header order-column">PRICE</span>
+            <span class="order-quantity order-header order-column">QUANTITY</span>
+        </div>
+        <div class="order-items">
+        </div>
+        <div class="order-total">
+            <strong class="order-total-title">Total</strong>
+            <span class="order-total-price">$0</span>
+        </div>
+        <button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>
+    </section>
 </body>

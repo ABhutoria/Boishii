@@ -255,3 +255,135 @@ img {
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
+/*
+Adapted from: https://github.com/WebDevSimplified/Introduction-to-Web-Development/blob/master/Introduction%20to%20JavaScript/Lesson%201/styles.css
+we should change shit here probably
+*/
+
+.content-section {
+  margin: 1em;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1.5em;
+}
+.section-header {
+  font-family: "Metal Mania";
+  font-weight: normal;
+  color: #333;
+  text-align: center;
+  font-size: 2.5em;
+}
+
+.btn-primary {
+  color: white;
+  background-color: #8b66e2;
+  border: none;
+  border-radius: .3em;
+  font-weight: bold;
+}
+
+.btn-purchase {
+  display: block;
+  margin: 40px auto 80px auto;
+  font-size: 1.75em;
+}
+
+.order-header {
+  font-weight: bold;
+  font-size: 1.25em;
+  color: #333;
+}
+
+.order-column {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid black;
+  margin-right: 1.5em;
+  padding-bottom: 10px;
+  margin-top: 10px;
+}
+
+.order-row {
+  display: flex;
+}
+
+.order-item {
+  width: 45%;
+}
+
+.order-price {
+  width: 20%;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.order-quantity {
+  width: 35%;
+}
+
+.order-item-title {
+  color: #333;
+  margin-left: .5em;
+  font-size: 1.2em;
+}
+
+.order-item-image {
+  width: 75px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.btn-danger {
+  color: white;
+  background-color: #EB5757;
+  border: none;
+  border-radius: .3em;
+  font-weight: bold;
+}
+
+.btn-danger:hover {
+  background-color: #CC4C4C;
+}
+
+.order-quantity-input {
+  height: 34px;
+  width: 50px;
+  border-radius: 5px;
+  border: 1px solid #56CCF2;
+  background-color: #eee;
+  color: #333;
+  padding: 0;
+  text-align: center;
+  font-size: 1.2em;
+  margin-right: 25px;
+}
+
+.order-row:last-child {
+  border-bottom: 1px solid black;
+}
+
+.order-row:last-child .cart-column {
+  border: none;
+}
+
+.order-total {
+  text-align: end;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.order-total-title {
+  font-weight: bold;
+  font-size: 1.5em;
+  color: black;
+  margin-right: 20px;
+}
+
+.order-total-price {
+  color: #333;
+  font-size: 1.1em;
+}
