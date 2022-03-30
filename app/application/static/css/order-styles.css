@@ -1,0 +1,257 @@
+/*
+The CSS has been adapted from the templates at:
+https://codepen.io/mynoralexander/pen/gpyYOo
+https://codepen.io/cssgirl/pen/qEKgaJ
+https://codesandbox.io/s/agitated-tu-97n1i?file=/index.js
+*/
+
+h1 {
+  text-align: center;
+  font-family: 'Righteous', cursive;
+}
+
+body {
+  font-family: 'Righteous', cursive;
+}
+
+.centered {
+    margin: 0 auto;
+    padding: 0 1em;
+}
+
+@media screen and (min-width: 52em) {
+    .centered {
+        max-width: 52em;
+    }
+}
+
+.boishii-titlebox {
+  border: 5px groove black;
+  border-radius: 8px;
+  background: rgb(246,209,144);
+  background: linear-gradient(90deg, rgba(246,209,144,1) 15%, rgba(251,162,0,0.9352474266073617) 50%, rgba(246,209,144,1) 85%); 
+}
+
+.site-title {
+    font-size: 2em;
+    font-weight: 300;
+    text-align: center;
+    color: black;
+}
+
+@media screen and (min-width: 44.44em) {
+    .site-title {
+        font-size: 2em;
+    }
+}
+    
+@media screen and (min-width: 50em) {
+    .site-title {
+        font-size: 2.5em;
+    }
+}
+
+.site-title a {
+    color: hsl(5, 45%, 95%);
+    text-decoration: none;
+}
+
+.site-title a:hover {
+    text-decoration: underline;
+}
+
+/* Card Based Layout - Base styles */
+body {
+  background: #ecf0f1;
+  line-height: 1.4;
+}
+
+.site-title {
+	color: white;
+}
+
+.card {
+	background: white;
+	margin-bottom: 2em;	
+}
+
+.card a {
+	color: black;
+	text-decoration: none;
+}
+
+.card a:hover {
+	box-shadow: 3px 3px 8px hsl(0, 0%, 70%);
+}
+
+.card-content {
+	padding: 1.4em;
+}
+
+.card-content h2 {
+	margin-top: 0;
+	margin-bottom: .5em;
+	font-weight: normal;
+}
+
+.card-content p {
+	font-size: 95%;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+/* Flexbox styles */
+@media screen and (min-width: 40em) {  
+  .cards {
+    margin-top: -1em;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .card {
+    margin-bottom: 1em;
+    display: flex;
+    flex: 0 1 calc(50% - 0.5em);
+  }
+}
+
+@media screen and (min-width: 60em) {
+  .cards {
+    margin-top: inherit;
+  }
+  
+  .card {
+    margin-bottom: 2em;
+    display: flex;
+    flex: 0 1 calc(33% - 0.5em);
+  }
+}
+
+.main-nav {
+  background: rgba(65, 156, 19, 0.616);
+  color: white;
+  border: 5px groove black;
+  border-radius: 8px;
+}
+/*
+.main-nav a {
+  color: rgb(13, 86, 243);
+  text-decoration: none;
+  display: flex;
+}
+
+.main-nav  ul, li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.main-nav ul {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+.main-nav ul a {
+  padding: 15px 35px;
+  display: flex;
+  text-transform: uppercase;
+}
+
+.main-nav ul a:hover, a:focus {
+  background: yellow 25%;
+  color: blue 25%;
+}
+
+.main-nav ul .mobile-button a {
+  position: absolute;
+  left: -99999em;
+}*/
+
+.main-nav ul {
+  list-style: none;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.main-nav ul a {
+  color: white;
+}
+
+.main-nav ul li {
+  padding: 5px;
+  margin-left: 10px;
+}
+
+.main-nav ul li:hover {
+  transform: scale(1.1);
+  transition: 0.3s;
+}
+
+#hamburger-icon {
+  margin: auto 0;
+  display: none;
+  cursor: pointer;
+}
+
+#hamburger-icon div {
+  width: 35px;
+  height: 3px;
+  background-color: white;
+  margin: 6px 0;
+  transition: 0.4s;
+}
+
+.open .bar1 {
+  -webkit-transform: rotate(-45deg) translate(-6px, 6px);
+  transform: rotate(-45deg) translate(-6px, 6px);
+}
+
+.open .bar2 {
+  opacity: 0;
+}
+
+.open .bar3 {
+  -webkit-transform: rotate(45deg) translate(-6px, -8px);
+  transform: rotate(45deg) translate(-6px, -8px);
+}
+
+.open .mobile-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.mobile-menu {
+  display: none;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  height: calc(100vh - 50px);
+  width: 100%;
+}
+
+.mobile-menu li {
+  margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+  header nav {
+    display: none;
+  }
+
+  #hamburger-icon {
+    display: block;
+  }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');

@@ -7,3 +7,7 @@ from flask import current_app as app
 @app.route('/index')
 def index():
     return render_template('index.html', title="Boishii Mobile Menu | Home")
+
+@app.route('/order')
+def order_page():
+    return render_template('appetizers.html', title="Boishii Mobile Menu | Order")

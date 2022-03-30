@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{{title}}</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="styleSheet" href="{{ url_for('static', filename = 'css/order-styles.css') }}">
+    <script src="{{ url_for('static', filename = 'js/order.js') }}"></script>
+</head>
+
+<body>
+    <header class="boishii-titlebox clear">
+        <div class="centered">
+            <div>
+                <h1 class="site-title">Boishii Mobile Menu</h1>
+            </div>
+        </div>
+    </header>
+    <!--Code here was adapted from https://codesandbox.io/s/agitated-tu-97n1i?file=/index.html-->
+    <nav class="main-nav">
+        <ul>
+            <li><a href="#Appetizers">Appetizers</a></li>
+            <li><a href="#Main_Courses">Main Courses</a></li>
+            <li><a href="#Dessert">Dessert</a></li>
+            <li><a href="#Drinks">Drinks</a></li>
+        </ul>
+    </nav>
+    <div id="hamburger-icon" onclick="toggleMobileMenu(this)">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+        <ul class="mobile-menu">
+            <li><a href="#Appetizers">Appetizers</a></li>
+            <li><a href="#Main_Courses">Main Courses</a></li>
+            <li><a href="#Dessert">Dessert</a></li>
+            <li><a href="#Drinks">Drinks</a></li>
+        </ul>
+    </div>
+    <!--End of adapted code-->
+
+    <main class="main-area">
+        <div class="centered">
+            <section class="cards">
+                {% block cards %}
+                {% endblock %}
+            </section>
+        </div>
+    </main>
+</body>
