@@ -10,4 +10,4 @@ def index():
 
 @app.route('/order')
 def order_page():
-    return render_template('order_page.html', title="Boishii Mobile Menu | Order")
+    return render_template('appetizers.html', title="Boishii Mobile Menu | Order")
