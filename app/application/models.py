@@ -17,7 +17,7 @@ class Manager(db.Model): # fooditem inherits db.Mod__init__l
     def __repr__(self):
 
        #f allows to print  variable inside the curly for simplicity
-        return f"Manager('{self.employeeID}','{self.first_Name}', '{self.last_Name}','{self.validation_Code}')" 
+        return f"Manager('{self.EmployeeID}','{self.First_Name}', '{self.Last_Name}','{self.Validation_Code}')" 
 
 
 #Waiter Table
@@ -31,12 +31,16 @@ class Waiter(db.Model): # fooditem inherits db.Model
     
     Last_Name = db.Column(db.String(50), nullable = False)
     
-
-
     ManagerID = db.Column(db.Integer, db.ForeignKey('Manager.EmployeeID'),nullable = False)
+    
+    
+    
     def __repr__(self):
     
-        return f"Waiter('{self.employeeID}','{self.first_Name}', '{self.last_Name}', '{self.ManagerID}')"
+        return f"Waiter('{self.EmployeeID}','{self.First_Name}', '{self.Last_Name}', '{self.ManagerID}')"
+
+
+        
 #Cook Table
 class Cook(db.Model): # fooditem inherits db.Model
 
