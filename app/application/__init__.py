@@ -6,12 +6,12 @@ db = SQLAlchemy()
 def init_app():
     app = Flask(__name__, instance_relative_config=False)
 
-    app.config.from_object('config.Config')
+    #app.config.from_object('config.Config')
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
     db.init_app(app)
 
     with app.app_context():
-        from . import routes
+        import routes
 
         db.create_all()
 
