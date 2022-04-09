@@ -1,4 +1,4 @@
-from __init__ import db
+from .__init__ import db
 from datetime import datetime
 
 #Manager Table
@@ -156,15 +156,15 @@ class Customer(db.Model): # Customer inherits db.Model
 
     __tablename__ = 'Customer'
 
-    First_Name = db.Column(db.String(50), nullable = False) 
-    Last_Name = db.Column(db.String(50), nullable = False)
+    Name = db.Column(db.String(50), nullable = False) 
+   # Last_Name = db.Column(db.String(50), nullable = False)
 
     TableNum = db.Column(db.Integer, db.ForeignKey('Table.TableNum'),primary_key = True)
     
     RecieptNum = db.Column(db.Integer, db.ForeignKey('Order_Reciept.RecieptNum'), primary_key = True)
-
+    ResturantID = db.Column(db.Integer)
     def __repr__(self):
-        return f"Menu_Item('{self.First_Name}','{self.Last_Name}', '{self.TableNum}','{self.RecieptNum}')" 
+        return f"Customer('{self.Name}', '{self.TableNum}','{self.RecieptNum}''{self.ResturantID}')" 
 
 
 
