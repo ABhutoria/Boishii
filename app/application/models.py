@@ -68,7 +68,7 @@ class Table(db.Model): # Table inherits db.Model
 
     __tablename__ = 'Table'
 
-    tableNum = db.Column(db.Integer, primary_key= True)
+    TableNum = db.Column(db.Integer, primary_key= True)
 
   
     WaiterID = db.Column(db.Integer, db.ForeignKey('Waiter.EmployeeID'))
@@ -159,12 +159,25 @@ class Customer(db.Model): # Customer inherits db.Model
     Name = db.Column(db.String(50), nullable = False) 
    # Last_Name = db.Column(db.String(50), nullable = False)
 
-    TableNum = db.Column(db.Integer, db.ForeignKey('Table.TableNum'),primary_key = True)
+    TableNum = db.Column(db.Integer, db.ForeignKey('Table.TableNum'), primary_key = True)
     
     ReceiptNum = db.Column(db.Integer, db.ForeignKey('Order_Receipt.ReceiptNum'), primary_key = True)
     RestaurantID = db.Column(db.Integer)
+
+    def __init__(self, name: str, tableNum: int, receiptNum: int, restaurantID: int):
+       self.Name = name
+       self.TableNum = tableNum
+       self.ReceiptNum = receiptNum
+       self.RestaurantID = restaurantID
+
+    @staticmethod
+    def create(name, tableNum, receiptNum, restaurantID):
+       newC = Customer(name, tableNum, receiptNum, restaurantID)
+       db.session.add(newC)
+       db.session.commit()
+
     def __repr__(self):
-        return f"Customer('{self.Name}', '{self.TableNum}','{self.ReceiptNum}''{self.RestaurantID}')" 
+       return f"Customer('{self.Name}', '{self.TableNum}','{self.ReceiptNum}''{self.RestaurantID}')" 
 
 
 

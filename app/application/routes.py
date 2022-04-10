@@ -12,9 +12,7 @@ from random import randint
 def index():
     rForm = RestaurantForm()
     if request.method == 'POST':
-        cust = Customer(Name = rForm.cName, TableNum = rForm.tableNum, ReceiptNum = randint(0, 200), RestaurantID = rForm.restID)
-        db.session.add(cust)
-        db.session.commit()
+        Customer.create(rForm.cName, rForm.tableNum, randint(0, 200), rForm.restID)
         return make_response(redirect('/order'))
     return render_template('index.html', title="Boishii Mobile Menu | Home", form=rForm)
 
