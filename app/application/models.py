@@ -1,8 +1,8 @@
-from . import db
+from .__init__ import db
 from datetime import datetime
 
 #Manager Table
-class Manager(db.Model): # fooditem inherits db.Model
+class Manager(db.Model): # fooditem inherits db.Mod__init__l
 
     __tablename__ = 'Manager'
 
@@ -15,8 +15,9 @@ class Manager(db.Model): # fooditem inherits db.Model
     Validation_Code = db.Column(db.Integer,nullable = False)
 
     def __repr__(self):
-       # return '<Food Item %r>' % self.id
-        return f"Manager('{self.employeeID}','{self.first_Name}', '{self.last_Name}','{self.validation_Code}')" 
+
+       #f allows to print  variable inside the curly for simplicity
+        return f"Manager('{self.EmployeeID}','{self.First_Name}', '{self.Last_Name}','{self.Validation_Code}')" 
 
 
 #Waiter Table
@@ -30,12 +31,16 @@ class Waiter(db.Model): # fooditem inherits db.Model
     
     Last_Name = db.Column(db.String(50), nullable = False)
     
-    #add ManagerID foreign key
-
+    ManagerID = db.Column(db.Integer, db.ForeignKey('Manager.EmployeeID'),nullable = False)
+    
+    
+    
     def __repr__(self):
-       # return '<Food Item %r>' % self.id
-        return f"Waiter('{self.employeeID}','{self.first_Name}', '{self.last_Name}')" #add ManagerID
+    
+        return f"Waiter('{self.EmployeeID}','{self.First_Name}', '{self.Last_Name}', '{self.ManagerID}')"
 
+
+        
 #Cook Table
 class Cook(db.Model): # fooditem inherits db.Model
 
@@ -49,92 +54,85 @@ class Cook(db.Model): # fooditem inherits db.Model
     
     Position = db.Column(db.String(50), nullable = False)
 
-
-    #add ManagerID foreign key
+    ManagerID = db.Column(db.Integer,db.ForeignKey('Manager.EmployeeID') , nullable = False)
+  
 
     def __repr__(self):
-       # return '<Food Item %r>' % self.id
-        return f"Cook('{self.employeeID}','{self.first_Name}', '{self.last_Name}','{self.position}')" #add ManagerID
+
+        return f"Cook('{self.EmployeeID}','{self.First_Name}', '{self.Last_Name}','{self.Position}','{self.ManagerID}')" #add ManagerID
 
 
 
 #Table Table
-class Table(db.Model): # fooditem inherits db.Model
+class Table(db.Model): # Table inherits db.Model
 
     __tablename__ = 'Table'
 
     tableNum = db.Column(db.Integer, primary_key= True)
 
-    #WaiterID is a forign key
   
-
+    WaiterID = db.Column(db.Integer, db.ForeignKey('Waiter.EmployeeID'))
     def __repr__(self):
-       # return '<Food Item %r>' % self.id
-        return f"Cook('{self.employeeID}','{self.first_Name}', '{self.last_Name}','{self.position}')" #add foreignkey
+        return f"Table('{self.TableNum}','{self.WaiterID}')"
 
 
 
 #Order Table
 
-class OrderReciept(db.Model): # Order Reciept inherits db.Model
+class Order_Reciept(db.Model): # Order Reciept inherits db.Model
 
-    __tablename__ = 'OrderReciept'
+    __tablename__ = 'Order_Reciept'
 
     OrderNum = db.Column(db.Integer, primary_key= True)
 
-    ReciptNum = db.Column(db.Integer, primary_key= True) # are there 2 primary keys??
+    RecieptNum = db.Column(db.Integer, primary_key= True) # are there 2 primary keys??
 
     Total_Price = db.Column(db.Float, default = 0)
 
-       #TableNum is a forign key
+   
+    TableNum = db.Column(db.Integer, db.ForeignKey('Table.TableNum'), unique = True)
 
     def __repr__(self):
-       # return '<Food Item %r>' % self.id
-        return f"OrderReciept('{self.id}','{self.name}', '{self.description}','{self.picture}')" #TableNum is a foreignKey
+        return f"Order_Reciept('{self.OrderNum}','{self.RecieptNum}','{self.Total_Price}', '{self.TableNum})" #TableNum is a foreignKey
 
 
-#Multivariable attribute of Order
-class Special_Requests(db.Model): # DishQueue inherits db.Model
+#Multivariable attribute, Special Request, in Order_Reciept
+class Special_Requests(db.Model): # Special_Request inherits db.Model
 
     __tablename__ = 'Special_Requests'
 
     Request = db.Column(db.String(500), nullable = False, primary_key = True)
 
-
-    # OrderNum should be a foreign key and primarykey
-
+    OrderNum = db.Column(db.Integer, db.ForeignKey('Order_Reciept.OrderNum'), primary_key = True)
 
     def __repr__(self):
-       # return '<Food Item %r>' % self.id
-        return f"Menu_Item('{self.id}','{self.first_Name}', '{self.last_Name}')" # add OrderNum 
+        return f"Special_Requests('{self.Request}','{self.OrderNum}')" # add OrderNum 
 
 
 
 
 #Items attribute of Order
-class Order_Item(db.Model): # DishQueue inherits db.Model
+class Order_Item(db.Model): # Order_Item inherits db.Model
 
     __tablename__ = 'Order_Item'
 
     Item = db.Column(db.String(500), nullable = False, primary_key = True)
 
-    OrderNum = db.Column(db.Integer, nullable = False, primary_key = True)
 
     Quantity = db.Column(db.Integer, nullable = False, default = 1)
 
-    # OrderNum should be a foreign key and primarykey
-
+    
+    OrderNum = db.Column(db.Integer, db.ForeignKey('Order_Reciept.OrderNum'), primary_key = True)
 
     def __repr__(self):
-       # return '<Food Item %r>' % self.id
-        return f"Menu_Item('{self.id}','{self.first_Name}', '{self.last_Name}')" # add OrderNum 
+        return f"Order_Item('{self.Item}','{self.Quantity}',  '{self.OrderNum}')" # add OrderNum 
 
 
 
 
 
 #Menu_Items is a table that contain ALL items to select from
-class Menu_Item(db.Model): # fooditem inherits db.Model
+class Menu_Item(db.Model): # Menu_Item inherits db.Model
 
     __tablename__ = 'Menu_Items'
 
@@ -149,8 +147,7 @@ class Menu_Item(db.Model): # fooditem inherits db.Model
     
 
     def __repr__(self):
-       # return '<Food Item %r>' % self.id
-        return f"Menu_Item('{self.id}','{self.name}', '{self.description}','{self.picture}')"
+        return f"Menu_Item('{self.Name}','{self.Description}', '{self.Image}','{self.Price}')"
 
 
 
@@ -159,16 +156,15 @@ class Customer(db.Model): # Customer inherits db.Model
 
     __tablename__ = 'Customer'
 
-    First_Name = db.Column(db.String(50), nullable = False) 
-    Last_Name = db.Column(db.String(50), nullable = False)
+    Name = db.Column(db.String(50), nullable = False) 
+   # Last_Name = db.Column(db.String(50), nullable = False)
 
-
-    # TableNumber should be a foreign key and primarykey
-    # RecieptNum foreign key and primarykey
-
+    TableNum = db.Column(db.Integer, db.ForeignKey('Table.TableNum'),primary_key = True)
+    
+    RecieptNum = db.Column(db.Integer, db.ForeignKey('Order_Reciept.RecieptNum'), primary_key = True)
+    ResturantID = db.Column(db.Integer)
     def __repr__(self):
-       # return '<Food Item %r>' % self.id
-        return f"Menu_Item('{self.id}','{self.first_Name}', '{self.last_Name}')" # add TableNum and recieptNum
+        return f"Customer('{self.Name}', '{self.TableNum}','{self.RecieptNum}''{self.ResturantID}')" 
 
 
 
@@ -184,13 +180,12 @@ class DishQueue(db.Model): # DishQueue inherits db.Model
 
     PositionInQueue = db.Column(db.Integer, nullable = False)
 
-
-    # CookID should be a foreign key
-    # RecieptNum foreign key
+    CookID =  db.Column(db.Integer, db.ForeignKey('Cook.EmployeeID'), primary_key = True)
+    RecieptNum = db.Column(db.Integer, db.ForeignKey('Order_Reciept.RecieptNum'))
+   
 
     def __repr__(self):
-       # return '<Food Item %r>' % self.id
-        return f"Menu_Item('{self.id}','{self.first_Name}', '{self.last_Name}')" # add CookID and recieptNum
+        return f"DishQueue('{self.Dish}','{self.PositionInQueue}','{self.CookID}','{self.RecieptNum}')" # add CookID and recieptNum
 
 
 
