@@ -10,6 +10,7 @@ from random import randint
 @app.route('/home')
 @app.route('/index')
 def index():
+    db.create_all()
     rForm = RestaurantForm()
     if request.method == 'POST':
         Customer.create(rForm.cName.data, int(rForm.tableNum.data), randint(0, 200), int(rForm.restID.data))
