@@ -79,13 +79,13 @@ class Table(db.Model): # Table inherits db.Model
 
 #Order Table
 
-class Order_Reciept(db.Model): # Order Reciept inherits db.Model
+class Order_Receipt(db.Model): # Order Receipt inherits db.Model
 
-    __tablename__ = 'Order_Reciept'
+    __tablename__ = 'Order_Receipt'
 
     OrderNum = db.Column(db.Integer, primary_key= True)
 
-    RecieptNum = db.Column(db.Integer, primary_key= True) # are there 2 primary keys??
+    ReceiptNum = db.Column(db.Integer, primary_key= True) # are there 2 primary keys??
 
     Total_Price = db.Column(db.Float, default = 0)
 
@@ -93,17 +93,17 @@ class Order_Reciept(db.Model): # Order Reciept inherits db.Model
     TableNum = db.Column(db.Integer, db.ForeignKey('Table.TableNum'), unique = True)
 
     def __repr__(self):
-        return f"Order_Reciept('{self.OrderNum}','{self.RecieptNum}','{self.Total_Price}', '{self.TableNum})" #TableNum is a foreignKey
+        return f"Order_Receipt('{self.OrderNum}','{self.ReceiptNum}','{self.Total_Price}', '{self.TableNum})" #TableNum is a foreignKey
 
 
-#Multivariable attribute, Special Request, in Order_Reciept
+#Multivariable attribute, Special Request, in Order_Receipt
 class Special_Requests(db.Model): # Special_Request inherits db.Model
 
     __tablename__ = 'Special_Requests'
 
     Request = db.Column(db.String(500), nullable = False, primary_key = True)
 
-    OrderNum = db.Column(db.Integer, db.ForeignKey('Order_Reciept.OrderNum'), primary_key = True)
+    OrderNum = db.Column(db.Integer, db.ForeignKey('Order_Receipt.OrderNum'), primary_key = True)
 
     def __repr__(self):
         return f"Special_Requests('{self.Request}','{self.OrderNum}')" # add OrderNum 
@@ -122,7 +122,7 @@ class Order_Item(db.Model): # Order_Item inherits db.Model
     Quantity = db.Column(db.Integer, nullable = False, default = 1)
 
     
-    OrderNum = db.Column(db.Integer, db.ForeignKey('Order_Reciept.OrderNum'), primary_key = True)
+    OrderNum = db.Column(db.Integer, db.ForeignKey('Order_Receipt.OrderNum'), primary_key = True)
 
     def __repr__(self):
         return f"Order_Item('{self.Item}','{self.Quantity}',  '{self.OrderNum}')" # add OrderNum 
@@ -161,10 +161,10 @@ class Customer(db.Model): # Customer inherits db.Model
 
     TableNum = db.Column(db.Integer, db.ForeignKey('Table.TableNum'),primary_key = True)
     
-    RecieptNum = db.Column(db.Integer, db.ForeignKey('Order_Reciept.RecieptNum'), primary_key = True)
-    ResturantID = db.Column(db.Integer)
+    ReceiptNum = db.Column(db.Integer, db.ForeignKey('Order_Receipt.ReceiptNum'), primary_key = True)
+    RestaurantID = db.Column(db.Integer)
     def __repr__(self):
-        return f"Customer('{self.Name}', '{self.TableNum}','{self.RecieptNum}''{self.ResturantID}')" 
+        return f"Customer('{self.Name}', '{self.TableNum}','{self.ReceiptNum}''{self.RestaurantID}')" 
 
 
 
@@ -181,11 +181,11 @@ class DishQueue(db.Model): # DishQueue inherits db.Model
     PositionInQueue = db.Column(db.Integer, nullable = False)
 
     CookID =  db.Column(db.Integer, db.ForeignKey('Cook.EmployeeID'), primary_key = True)
-    RecieptNum = db.Column(db.Integer, db.ForeignKey('Order_Reciept.RecieptNum'))
+    ReceiptNum = db.Column(db.Integer, db.ForeignKey('Order_Receipt.ReceiptNum'))
    
 
     def __repr__(self):
-        return f"DishQueue('{self.Dish}','{self.PositionInQueue}','{self.CookID}','{self.RecieptNum}')" # add CookID and recieptNum
+        return f"DishQueue('{self.Dish}','{self.PositionInQueue}','{self.CookID}','{self.ReceiptNum}')" # add CookID and receiptNum
 
 
 
