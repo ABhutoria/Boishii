@@ -1,13 +1,20 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, make_response, render_template, url_for, request, redirect
 from flask import current_app as app
+from sqlalchemy import null
+from .forms import RestaurantForm
 from .__init__ import *
 from .models import *
+from random import randint
 
-@app.route('/')
+@app.route('/', methods = ['POST', 'GET'])
 @app.route('/home')
 @app.route('/index')
 def index():
-    return render_template('index.html', title="Boishii Mobile Menu | Home")
+    rForm = RestaurantForm()
+    if request.method == 'POST':
+        Customer.create(rForm.cName, rForm.tableNum, randint(0, 200), rForm.restID)
+        return make_response(redirect('/order'))
+    return render_template('index.html', title="Boishii Mobile Menu | Home", form=rForm)
 
 @app.route('/order')
 def order_page():
