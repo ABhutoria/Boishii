@@ -11,23 +11,47 @@
 <br />
 <br />
 <div class="boishii_form">
-    <form class="text-center">
-        <label for="cust_name">Customer Name:</label>
-        <br />
-        <input type="text" id="cust_name" class="input_box" name="cust_name">
-        <br />
-        <br />
-        <label for="table_num">Table No.:</label>
-        <br />
-        <input type="text" id="table_num" class="input_box" name="table_num">
-        <br />
-        <br />
-        <label for="restaurant_id">Restaurant ID (Ask your server):</label>
-        <br />
-        <input type="text" id="restaurant_id" class="input_box" name="restaurant_id">
-        <br />
-        <br />
-        <input type="submit" class="submit_btn" value="Submit">
+    <form class="text-center" method="POST" action="/">
+        {{ form.csrf_token }}
+        <p>{{ form.cName.label }}</p>
+        <p>{{ form.cName(class="input_box") }}</p>
+
+        {% if form.cName.errors %}
+            <ul class="errors">
+                {% for error in form.cName.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <p>
+            {{ form.tableNum.label }}
+        </p>
+        {{ form.tableNum(class="input_box") }}
+
+        {% if form.tableNum.errors %}
+            <ul class="errors">
+                {% for error in form.tableNum.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <p>
+            {{ form.restID.label }}
+        </p>
+        {{ form.restID(class="input_box") }}
+
+        {% if form.restID.errors %}
+            <ul class="errors">
+                {% for error in form.restID.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <p>
+            <input type="submit" class="submit_btn" value="Submit">
+        </p>
     </form>
 </div>
 {% endblock %}

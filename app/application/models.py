@@ -63,7 +63,7 @@ class Table(db.Model): # fooditem inherits db.Model
 
     __tablename__ = 'Table'
 
-    TableNum = db.Column(db.Integer, primary_key= True)
+    tableNum = db.Column(db.Integer, primary_key= True)
 
     #WaiterID is a forign key
   
@@ -84,7 +84,7 @@ class OrderReciept(db.Model): # Order Reciept inherits db.Model
 
     ReciptNum = db.Column(db.Integer, primary_key= True) # are there 2 primary keys??
 
-    Total_Price = db.Column(db.Double,default = 0)
+    Total_Price = db.Column(db.Float, default = 0)
 
        #TableNum is a forign key
 
@@ -142,7 +142,7 @@ class Menu_Item(db.Model): # fooditem inherits db.Model
 
     Description = db.Column(db.String(200), nullable = False)
 
-    Image = db.Column(db.String(20), default = default.jpg)
+    Image = db.Column(db.String(20), default = "default.jpg")
 
     Price = db.Column(db.Integer, nullable = False)
     
