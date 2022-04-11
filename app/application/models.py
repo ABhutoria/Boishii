@@ -46,12 +46,14 @@ class Cook(db.Model): # fooditem inherits db.Model
 
     __tablename__ = 'Cook'
 
-    EmployeeID = db.Column(db.Integer, primary_key= True)
+    
 
     First_Name = db.Column(db.String(50), nullable = False)
     
     Last_Name = db.Column(db.String(50), nullable = False)
     
+    EmployeeID = db.Column(db.Integer, primary_key= True)
+
     Position = db.Column(db.String(50), nullable = False)
 
     ManagerID = db.Column(db.Integer,db.ForeignKey('Manager.EmployeeID') , nullable = False)
@@ -116,7 +118,7 @@ class Order_Item(db.Model): # Order_Item inherits db.Model
 
     __tablename__ = 'Order_Item'
 
-    Item = db.Column(db.String(500), nullable = False, primary_key = True)
+    Item = db.Column(db.String(500),db.ForeignKey('Menu_Item.Name'), nullable = False, primary_key = True)
 
 
     Quantity = db.Column(db.Integer, nullable = False, default = 1)
@@ -156,7 +158,7 @@ class Customer(db.Model): # Customer inherits db.Model
 
     __tablename__ = 'Customer'
 
-    Name = db.Column(db.String(50), nullable = False) 
+    Name = db.Column(db.String(90), nullable = False) 
    # Last_Name = db.Column(db.String(50), nullable = False)
 
     TableNum = db.Column(db.Integer, db.ForeignKey('Table.TableNum'), primary_key = True)
