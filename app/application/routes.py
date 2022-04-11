@@ -24,7 +24,7 @@ def index():
 
  #API to retieve menu items from database
 @app.route('/getItems', methods = ["GET"])
-def order_page():
+def getItems():
    
     content = request.get_json()
     #print(content["Name"])
@@ -33,16 +33,45 @@ def order_page():
     menuItem = db.session.query(Menu_Item).filter_by(Name = content["Name"]).first() # how does the api get the name of which tuple to retieve
     
     print(menuItem.Name)
-    #dict = {"PENIS" : menuItem.Name}
-    #jsonStr = json.dumps(menuItem)
     dict = {"Name" : menuItem.Name,
             "Description" : menuItem.Description, 
             "Image": menuItem.Image, 
             "Price": menuItem.Price
             }
-
-
     return dict
+
+
+
+#input should be order number, Item name, Quantity
+
+
+@app.route('/addItem', methods = ["POST"])
+def addItemToOrder():
+   
+    content = request.get_json()
+    item = Order_Item(OrderNum = content["OrderNum"], Item = content["Name"], Quantity = content["Quantity"])
+    db.session.add(item)
+    db.session.commit()
+
+    print("added " + content["Name"]+ "to Order Number" + content["OrderNum"])
+    return "Successfully Added Item"
+   
+   
+
+
+
+@app.route('/removeItem', methods = ["POST"])
+def removeItemToOrder():
+   
+    content = request.get_json()
+    
+    item = Order_Item(OrderNum = content["OrderNum"], Item = content["Name"], Quantity = content["Quantity"])
+    db.session.delete(item)
+    db.session.commit()
+
+    print("removed ", content["Name"] , " to Order Number " , content["OrderNum"])
+    return "Successfully removed Item"
+   
 
 
 
@@ -122,6 +151,26 @@ def db_init(db):
     db.session.add(manager2)
 
 
+    #ADDING Cooks
+
+    cooks1 = Cook(First_Name = "Ahmed", Last_Name = "Al Marouf", EmployeeID = "122", Postion = "sous chef", ManagerID = 67890 )
+    db.session.add(cooks1)
+
+    cooks2 = Cook(First_Name = "Moein ", Last_Name = "Mirzaei", EmployeeID = "152", Postion = "sous chef", ManagerID = 67890 )
+    db.session.add(cooks2)
+
+    cooks3 = Cook(First_Name = "Eric  ", Last_Name = "Wang", EmployeeID = "172", Postion = "sous chef", ManagerID = 67890 )
+    db.session.add(cooks3)
+
+    #Adding Tables
+
+    Table1 = Table(TableNum = 1, WaiterID = None)
+    Table2 = Table(TableNum = 2, WaiterID = None)
+    Table3 = Table(TableNum = 3, WaiterID = None)
+
+
+
+    
     #adding items to menu_items  
     
     
