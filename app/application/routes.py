@@ -5,21 +5,46 @@ from .forms import RestaurantForm
 from .__init__ import *
 from .models import *
 from random import randint
+import json
 
 @app.route('/', methods = ['POST', 'GET'])
 @app.route('/home')
 @app.route('/index')
 def index():
-    db.create_all()
+    db_init(db)
+    #db.create_all()
     rForm = RestaurantForm()
     if request.method == 'POST':
         Customer.create(rForm.cName.data, int(rForm.tableNum.data), randint(0, 200), int(rForm.restID.data))
         return make_response(redirect('/order'))
     return render_template('index.html', title="Boishii Mobile Menu | Home", form=rForm)
 
-@app.route('/order')
+
+
+
+ #API to retieve menu items from database
+@app.route('/getItems', methods = ["GET"])
 def order_page():
-    return render_template('appetizers.html', title="Boishii Mobile Menu | Order")
+   
+    content = request.get_json()
+    #print(content["Name"])
+    #data = json.loads(content)
+   # print(data)
+    menuItem = db.session.query(Menu_Item).filter_by(Name = content["Name"]).first() # how does the api get the name of which tuple to retieve
+    
+    print(menuItem.Name)
+    #dict = {"PENIS" : menuItem.Name}
+    #jsonStr = json.dumps(menuItem)
+    dict = {"Name" : menuItem.Name,
+            "Description" : menuItem.Description, 
+            "Image": menuItem.Image, 
+            "Price": menuItem.Price
+            }
+
+
+    return dict
+
+
 
 
 
