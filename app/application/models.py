@@ -142,7 +142,7 @@ class Menu_Item(db.Model): # Menu_Item inherits db.Model
 
     Image = db.Column(db.String(20), default = "default.jpg")
 
-    Price = db.Column(db.Integer, nullable = False)
+    Price = db.Column(db.Float, nullable = False)
     
     
 
