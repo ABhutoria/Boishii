@@ -11,95 +11,150 @@ import json
 @app.route('/home')
 @app.route('/index')
 def index():
+    #//DEV
+    db.drop_all()
+    db.create_all()
     db_init(db)
-    #db.create_all()
+    
     rForm = RestaurantForm()
+
     if request.method == 'POST':
         Customer.create(rForm.cName.data, int(rForm.tableNum.data), randint(0, 200), int(rForm.restID.data))
         return make_response(redirect('/order'))
     return render_template('index.html', title="Boishii Mobile Menu | Home", form=rForm)
 
 
-
-
- #API to retieve menu items from database
-@app.route('/getItems', methods = ["GET"])
+#API to verify restaurantID
+# A json body will be received that will look something like 
+# {
+#      "RestaurantID": 1234
+# }
+@app.route('/validate', methods = ["GET"])
 def order_page():
+    content = request.get_json()
+    manager = db.session.query(Manager).filter_by(Validation_Code = content["RestaurantID"]).first()
+    if (manager == None):
+        return "False"
+    return "True"
+
+
+
+
+#API to retieve menu items from database
+# A json body will be received that will look something like 
+# {
+#      "Name": "Pizza"
+# }
+@app.route('/getItems', methods = ["GET"])
+def getItems():
    
     content = request.get_json()
-    #print(content["Name"])
-    #data = json.loads(content)
-   # print(data)
     menuItem = db.session.query(Menu_Item).filter_by(Name = content["Name"]).first() # how does the api get the name of which tuple to retieve
     
     print(menuItem.Name)
-    #dict = {"PENIS" : menuItem.Name}
-    #jsonStr = json.dumps(menuItem)
     dict = {"Name" : menuItem.Name,
             "Description" : menuItem.Description, 
             "Image": menuItem.Image, 
-            "Price": menuItem.Price
+            "Price": menuItem.Price,
+            #"rownum": menuItem.rowNum()
             }
-
-
     return dict
 
 
 
 
-
-# @app.route('/<EID>,<Fname>, <Lname>, <Vcode>')
-# def create_manager(EID, Fname, Lname, Vcode):
-#         manager = Manager(First_Name = Fname, Last_Name = Lname,EmployeeID = EID,Validation_Code= Vcode  )
-#         db.session.add(manager)
-#         db.session.commit()
-#         Manager.query.all()
-#         return "Created User!"
-
-
-# @app.route('/<EID>&<Fname>&<Lname>&<Vcode>')
-# def create_manager(EID, Fname, Lname, Vcode):
-#         manager = Manager(First_Name = Fname, Last_Name = Lname,EmployeeID = EID,Validation_Code= Vcode  )
-#         print("eid =" + EID + "fname = " + Fname + "lname = "+ Lname + "vcode = " +Vcode)
-        
-#         db.session.add(manager) 
-#         db.session.commit()
-#      #   Manager.query.all()
-#         return "Created User!"
-
-# @app.route('/?cust_name=<Cname>&table_num=<tnum>&restaurant_id=<rID>')
-# def create_customer(Cname, tnum, rID):
-#         cust = Customer(Name = Cname, TableNum = tnum,ResturantID = rID)
-#         print("name =" + Cname + "fname = " + tnum + "lname = "+ rID)
-#         db.session.add(cust)
-#         db.session.commit()
-#         #Manager.query.all()
-#         return "Created User!"
-
-# @app.route('/?cust_name=<name>&table_num=<tnum>&restaurant_id=<rID>')
-# def create_customer(name,tnum,rID):
-#         # cust = Customer(Name = name, TableNum = tnum,ResturantID = rID)
-#         # db.session.add(cust)
-#         # db.session.commit()
-        
-#         return "Created User!"
-
-
-
-# @app.route('/<EID>&<Fname>&<Lname>&<Vcode>')
-# def create_manager(EID, Fname, Lname, Vcode):
-#         manager = Manager(First_Name = Fname, Last_Name = Lname,EmployeeID = EID,Validation_Code= Vcode  )
-#         db.session.add(manager)
-#         db.session.commit()
-#         Manager.query.all()
-#         return "Created User!"
-
-
-
-# @app.route('/<name>,<age>')
-# def create_manager(name,age):
+#API to add menu items to an Order
+# A json body will be received that will look something like 
+# {
+#   "Quantity" : 3
+#   "OrderNum" : 123   
+#   "Name": "Pizza"
+# }
+@app.route('/addItem', methods = ["POST"])
+def addItemToOrder():
    
-#         return f"Created User : name: {name} + age: {age}!"
+    content = request.get_json()
+    item = Order_Item(OrderNum = content["OrderNum"], Item = content["Name"], Quantity = content["Quantity"])
+    db.session.add(item)
+    db.session.commit()
+
+    print("added " ,content["Name"], "to Order Number" , content["OrderNum"])
+    return "Successfully Added Item"
+   
+   
+
+
+#API to remove menu items to an Order
+# A json body will be received that will look something like 
+# {
+#   "OrderNum" : 123   
+#   "Name": "Pizza"
+# }
+@app.route('/removeItem', methods = ["POST"])
+def removeItemToOrder():
+   
+    content = request.get_json()
+    
+    item = db.session.query.filter(Name = content["Name"], OrderNum = content["OrderNum"])
+    db.session.delete(item)
+    db.session.commit()
+
+    print("removed ", content["Name"] , " to Order Number " , content["OrderNum"])
+    return "Successfully removed Item"
+   
+#API to create the order
+# {
+#   "OrderNum" : 123   
+#   "RecieptNum": 345
+#   "TableNum" : 2
+# }
+@app.route('/createOrder', methods = ["POST"])
+def createOrder():
+
+    content = request.get_json()
+    ord = Order_Receipt(OrderNum = content["OrderNum"], ReceiptNum = content["ReceiptNum"] , TableNum = content["TableNum"])
+    try:
+        db.session.add(ord)
+        db.session.commit()
+        return "Successfully created Order"
+    except:
+        return "-1"
+    
+#API delete order from order Database
+# {
+#   "OrderNum" : 123   
+# }
+@app.route('/deleteOrder', methods = ["POST"])
+def deleteOrder():
+
+    content = request.get_json()
+
+    try:
+        items = db.session.query(Order_Item).filter_by(OrderNum = content["OrderNum"]).all() 
+
+        print(items)
+        for i in items :
+            db.session.delete(i)
+
+        db.session.commit()
+
+        
+        ord = db.session.query(Order_Receipt).filter_by(OrderNum = content["OrderNum"]).first() # how does the api get the name of which tuple to retieve
+
+
+        db.session.delete(ord)
+        db.session.commit()
+
+        return "Successfully deleted Order"
+    except:
+        return "-1"
+
+
+
+# def db_testcase(db):
+
+
+
 
 
 
@@ -108,22 +163,56 @@ def db_init(db):
 
     #ADDING MANAGERS
 
-    manager = Manager(First_Name = "Austin", Last_Name = "Ficzere" ,EmployeeID = 123,Validation_Code= 67890 )
-
-    db.session.add(manager)
-
-    manager1 = Manager(First_Name = "Josh", Last_Name = "Cordeiro-Zebkowitz",EmployeeID = 9,Validation_Code= 12345 )
+    manager1 = Manager(EmployeeID = 1 ,First_Name = "Austin", Last_Name = "Ficzere" ,Validation_Code= 67890 )
 
     db.session.add(manager1)
+    db.session.commit()
 
-
-    manager2 = Manager(First_Name = "Anay", Last_Name = "Bhutoria",EmployeeID = 1,Validation_Code= 34889 )
+    manager2 = Manager(EmployeeID = 2,First_Name = "Josh", Last_Name = "Cordeiro-Zebkowitz",Validation_Code= 12345 )
 
     db.session.add(manager2)
 
 
+    manager3 = Manager(EmployeeID = 3,First_Name = "Anay", Last_Name = "Bhutoria",Validation_Code= 34889 )
+
+    db.session.add(manager3)
+
+    db.session.commit()
+    #ADDING Cooks
+
+    cooks1 = Cook(First_Name = "Ahmed", Last_Name = "Al Marouf", EmployeeID = 4, Position = "sous chef", ManagerID = 1 )
+    db.session.add(cooks1)
+
+    cooks2 = Cook(First_Name = "Moein", Last_Name = "Mirzaei", EmployeeID = 5, Position = "sous chef", ManagerID = 2 )
+    db.session.add(cooks2)
+
+    cooks3 = Cook(First_Name = "Eric", Last_Name = "Wang", EmployeeID = 6, Position = "sous chef", ManagerID = 3 )
+    db.session.add(cooks3)
+
+    db.session.commit()
+    #Adding Tables
+
+    Table1 = Table(TableNum = 1, WaiterID = None)
+    db.session.add(Table1)
+    Table2 = Table(TableNum = 2, WaiterID = None)
+    db.session.add(Table2)
+    Table3 = Table(TableNum = 3, WaiterID = None)
+    db.session.add(Table3)
+
+    #Adding Waiter
+
+
+    Waiter1 = Waiter(EmployeeID = 7, First_Name = "Mana", Last_Name = "Kim", ManagerID = 1)
+    db.session.add(Waiter1)
+    Waiter2 = Waiter(EmployeeID = 8, First_Name = "Kashfia ", Last_Name = "Sailunaz ", ManagerID = 2)
+    db.session.add(Waiter2)
+    Waiter3 = Waiter(EmployeeID = 9, First_Name = "Wayne", Last_Name = "Eberly", ManagerID = 3)
+    db.session.add(Waiter3)
     #adding items to menu_items  
     
+
+
+
     
     #template = Menu_Item(Name = "", Description ="", Image =".png",Price = 12.99)
     #db.session.add(template)
@@ -148,7 +237,7 @@ def db_init(db):
     burger = Menu_Item(Name = "Burger", Description ="A BBQ burger with onion rings!", Image ="burger.png",Price = 8.99)
     db.session.add(burger)
 
-
+    db.session.commit()
     #Main Course
 
     #pho
@@ -164,7 +253,6 @@ def db_init(db):
 
 
     #Butter Chicken
-
     butterChicken = Menu_Item(Name = "Butter Chicken", Description ="spicy food", Image ="butter-chicken.jpeg",Price = 13.99)
     db.session.add(butterChicken)
 
@@ -180,7 +268,7 @@ def db_init(db):
 
     #Steak
 
-    steak = Menu_Item(Name = "Steak", Description ="MEAT", Image ="briyani.jpeg",Price = 43.99)
+    steak = Menu_Item(Name = "Steak", Description ="MEAT", Image ="steak.jpeg",Price = 43.99)
     db.session.add(steak)
     
     
@@ -195,7 +283,7 @@ def db_init(db):
     db.session.add(shawarma)
 
 
-
+    db.session.commit()
     #Dessert
     
     chocolateCake = Menu_Item(Name = "Chocolate Cake", Description ="Cake, just eat it", Image ="chocoCake.jpeg",Price = 12.99)
@@ -211,7 +299,7 @@ def db_init(db):
     fondue = Menu_Item(Name = "Fondue", Description ="Fondue with fruit", Image ="fondue.jpeg",Price = 24.99)
     db.session.add(fondue)
 
-    
+    db.session.commit()
 
     #Drinks
 
