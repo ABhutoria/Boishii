@@ -12,9 +12,9 @@ import json
 @app.route('/index')
 def index():
     #//DEV
-    db.drop_all()
-    db.create_all()
-    db_init(db)
+    # db.drop_all()
+    # db.create_all()
+    # db_init(db)
     
     rForm = RestaurantForm()
 
@@ -45,21 +45,23 @@ def order_page():
 # {
 #      "Name": "Pizza"
 # }
-@app.route('/getItems', methods = ["GET"])
+@app.route('/getItem', methods = ["GET"])
 def getItems():
    
     content = request.get_json()
-    menuItem = db.session.query(Menu_Item).filter_by(Name = content["Name"]).first() # how does the api get the name of which tuple to retieve
-    
-    print(menuItem.Name)
-    dict = {"Name" : menuItem.Name,
-            "Description" : menuItem.Description, 
-            "Image": menuItem.Image, 
-            "Price": menuItem.Price,
-            #"rownum": menuItem.rowNum()
-            }
-    return dict
+    try:
+        menuItem = db.session.query(Menu_Item).filter_by(Name = content["Name"]).first() # how does the api get the name of which tuple to retieve
 
+        #print(menuItem.Name)
+        dict = {"Name" : menuItem.Name,
+                "Description" : menuItem.Description, 
+                "Image": menuItem.Image, 
+                "Price": menuItem.Price
+                
+                }
+        return dict
+    except:
+        return "-1"
 
 
 
@@ -72,15 +74,16 @@ def getItems():
 # }
 @app.route('/addItem', methods = ["POST"])
 def addItemToOrder():
-   
-    content = request.get_json()
-    item = Order_Item(OrderNum = content["OrderNum"], Item = content["Name"], Quantity = content["Quantity"])
-    db.session.add(item)
-    db.session.commit()
+    try:
+        content = request.get_json()
+        item = Order_Item(OrderNum = content["OrderNum"], Item = content["Name"], Quantity = content["Quantity"])
+        db.session.add(item)
+        db.session.commit()
 
-    print("added " ,content["Name"], "to Order Number" , content["OrderNum"])
-    return "Successfully Added Item"
-   
+        print("added " ,content["Name"], "to Order Number" , content["OrderNum"])
+        return "Successfully Added Item"
+    except:
+        return "-1"
    
 
 
@@ -93,15 +96,22 @@ def addItemToOrder():
 @app.route('/removeItem', methods = ["POST"])
 def removeItemToOrder():
    
-    content = request.get_json()
-    
-    item = db.session.query.filter(Name = content["Name"], OrderNum = content["OrderNum"])
-    db.session.delete(item)
-    db.session.commit()
 
-    print("removed ", content["Name"] , " to Order Number " , content["OrderNum"])
-    return "Successfully removed Item"
+
+    content = request.get_json()
+    try:  
+        item = db.session.query(Order_Item).filter_by(Item = content["Name"], OrderNum = content["OrderNum"]).first()
+        db.session.delete(item)
+        db.session.commit()
+
+        print("removed ", content["Name"] , " from Order Number " , content["OrderNum"])
+        return "Successfully removed Item"
    
+    except:
+        return "-1" #if cannot remove item return -1
+
+
+
 #API to create the order
 # {
 #   "OrderNum" : 123   
@@ -129,7 +139,7 @@ def deleteOrder():
 
     content = request.get_json()
 
-    try:
+    try: # remove all items in Order_Item with the input ordernumber 
         items = db.session.query(Order_Item).filter_by(OrderNum = content["OrderNum"]).all() 
 
         print(items)
@@ -138,7 +148,7 @@ def deleteOrder():
 
         db.session.commit()
 
-        
+        #remove order from Order Reciept
         ord = db.session.query(Order_Receipt).filter_by(OrderNum = content["OrderNum"]).first() # how does the api get the name of which tuple to retieve
 
 
@@ -147,7 +157,7 @@ def deleteOrder():
 
         return "Successfully deleted Order"
     except:
-        return "-1"
+        return "-1"  #if cannot remove order return -1
 
 
 
