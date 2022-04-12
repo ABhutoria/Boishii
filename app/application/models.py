@@ -85,14 +85,14 @@ class Order_Receipt(db.Model): # Order Receipt inherits db.Model
 
     __tablename__ = 'Order_Receipt'
 
-    OrderNum = db.Column(db.Integer, primary_key= True)
+    OrderNum = db.Column(db.Integer, primary_key= True )
 
     ReceiptNum = db.Column(db.Integer, primary_key= True) # are there 2 primary keys??
 
     Total_Price = db.Column(db.Float, default = 0)
 
    
-    TableNum = db.Column(db.Integer, db.ForeignKey('Table.TableNum'), unique = True)
+    TableNum = db.Column(db.Integer, db.ForeignKey('Table.TableNum'))
 
     def __repr__(self):
         return f"Order_Receipt('{self.OrderNum}','{self.ReceiptNum}','{self.Total_Price}', '{self.TableNum})" #TableNum is a foreignKey
@@ -105,7 +105,7 @@ class Special_Requests(db.Model): # Special_Request inherits db.Model
 
     Request = db.Column(db.String(500), nullable = False, primary_key = True)
 
-    OrderNum = db.Column(db.Integer, db.ForeignKey('Order_Receipt.OrderNum'), primary_key = True)
+    OrderNum = db.Column(db.Integer, db.ForeignKey('Order_Receipt.OrderNum'))
 
     def __repr__(self):
         return f"Special_Requests('{self.Request}','{self.OrderNum}')" # add OrderNum 
@@ -118,7 +118,7 @@ class Order_Item(db.Model): # Order_Item inherits db.Model
 
     __tablename__ = 'Order_Item'
 
-    Item = db.Column(db.String(500),db.ForeignKey('Menu_Item.Name'), nullable = False, primary_key = True)
+    Item = db.Column(db.String(500),db.ForeignKey('Menu_Item.Name'), nullable = False)
 
 
     Quantity = db.Column(db.Integer, nullable = False, default = 1)
@@ -127,7 +127,7 @@ class Order_Item(db.Model): # Order_Item inherits db.Model
     OrderNum = db.Column(db.Integer, db.ForeignKey('Order_Receipt.OrderNum'), primary_key = True)
 
     def __repr__(self):
-        return f"Order_Item('{self.Item}','{self.Quantity}',  '{self.OrderNum}')" # add OrderNum 
+        return f"Order_Item('{self.Item}','{self.Quantity}','{self.OrderNum}')" # add OrderNum 
 
 
 
@@ -136,7 +136,7 @@ class Order_Item(db.Model): # Order_Item inherits db.Model
 #Menu_Items is a table that contain ALL items to select from
 class Menu_Item(db.Model): # Menu_Item inherits db.Model
 
-    __tablename__ = 'Menu_Items'
+    __tablename__ = 'Menu_Item'
 
     Name = db.Column(db.String(50), nullable = False, primary_key = True)
 
@@ -195,7 +195,7 @@ class DishQueue(db.Model): # DishQueue inherits db.Model
 
     PositionInQueue = db.Column(db.Integer, nullable = False)
 
-    CookID =  db.Column(db.Integer, db.ForeignKey('Cook.EmployeeID'), primary_key = True)
+    CookID =  db.Column(db.Integer, db.ForeignKey('Cook.EmployeeID'))
     ReceiptNum = db.Column(db.Integer, db.ForeignKey('Order_Receipt.ReceiptNum'))
    
 
