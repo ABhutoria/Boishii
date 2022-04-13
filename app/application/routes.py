@@ -32,21 +32,19 @@ def index():
 @app.route('/validate', methods = ["GET"])
 def order_page():
     content = request.get_json()
-    manager = db.session.query(Manager).filter_by(Validation_Code = content["RestaurantID"]).first()
-    if (manager == None):
+    managerExists = db.session.query(Manager.Validation_Code).filter_by(Validation_Code = content["RestaurantID"]).first() is not None
+    if (managerExists == False):
         return "False"
     return "True"
 
 
-
-
 #API to retieve menu items from database
-# A json body will be received that will look something like 
+# Example input: 
 # {
 #      "Name": "Pizza"
 # }
 @app.route('/getItem', methods = ["GET"])
-def getItems():
+def getItem():
    
     content = request.get_json()
     try:
@@ -66,7 +64,7 @@ def getItems():
 
 
 #API to add menu items to an Order
-# A json body will be received that will look something like 
+# Example input: 
 # {
 #   "Quantity" : 3
 #   "OrderNum" : 123   
@@ -93,11 +91,9 @@ def addItemToOrder():
 #   "OrderNum" : 123   
 #   "Name": "Pizza"
 # }
-@app.route('/removeItem', methods = ["POST"])
+@app.route('/removeItem', methods = ["DELETE"])
 def removeItemToOrder():
    
-
-
     content = request.get_json()
     try:  
         item = db.session.query(Order_Item).filter_by(Item = content["Name"], OrderNum = content["OrderNum"]).first()
@@ -112,7 +108,11 @@ def removeItemToOrder():
 
 
 
+
+
+
 #API to create the order
+# Example input: 
 # {
 #   "OrderNum" : 123   
 #   "RecieptNum": 345
@@ -130,11 +130,15 @@ def createOrder():
     except:
         return "-1"
     
+
+
+
 #API delete order from order Database
+# Example input: 
 # {
 #   "OrderNum" : 123   
 # }
-@app.route('/deleteOrder', methods = ["POST"])
+@app.route('/deleteOrder', methods = ["DELETE"])
 def deleteOrder():
 
     content = request.get_json()
@@ -161,7 +165,44 @@ def deleteOrder():
 
 
 
-# def db_testcase(db):
+#API get Order from the database
+# Example input: 
+# {
+#   "OrderNum" : 123   
+# }
+
+# Example return
+# {
+#     "Steak" : 1
+#     "Nachos" : 4
+# }
+@app.route('/getOrder', methods = ["GET"])
+def getOrder():
+
+    content = request.get_json()
+
+    try: # remove all items in Order_Item with the input ordernumber 
+        items = db.session.query(Order_Item).filter_by(OrderNum = content["OrderNum"]).all() 
+
+        dict = {}
+
+        print(items)
+        for i in range(len(items)):
+
+            dict[items[i].Item] = items[i].Quantity
+
+    
+        return dict   #if dict is notempty then return the dict otherwise return -1
+        
+        
+    except:
+        return "-1" #if error then return -1
+
+
+
+
+
+
 
 
 
