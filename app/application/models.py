@@ -158,12 +158,12 @@ class Customer(db.Model): # Customer inherits db.Model
 
     __tablename__ = 'Customer'
 
-    Name = db.Column(db.String(90), nullable = False) 
+    Name = db.Column(db.String(90), nullable = False, primary_key = True) 
    # Last_Name = db.Column(db.String(50), nullable = False)
 
-    TableNum = db.Column(db.Integer, db.ForeignKey('Table.TableNum'), primary_key = True)
+    TableNum = db.Column(db.Integer, db.ForeignKey('Table.TableNum'))
     
-    ReceiptNum = db.Column(db.Integer, db.ForeignKey('Order_Receipt.ReceiptNum'), primary_key = True)
+    ReceiptNum = db.Column(db.Integer, db.ForeignKey('Order_Receipt.ReceiptNum'))
     RestaurantID = db.Column(db.Integer)
 
     def __init__(self, name: str, tableNum: int, receiptNum: int, restaurantID: int):

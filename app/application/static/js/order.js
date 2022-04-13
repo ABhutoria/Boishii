@@ -21,8 +21,8 @@ function ready() {
 
     // for adding when user clicks item, add to order list
     var addToOrderButtons = document.getElementsByClassName('card')
-    for (var i = 0; i < addToCartButtons.length; i++) {
-        var button = addToCartButtons[i]
+    for (var i = 0; i < addToOrderButtons.length; i++) {
+        var button = addToOrderButtons[i]
         button.addEventListener('click', addToCartClicked)
     }
 
@@ -104,7 +104,6 @@ function updateOrderTotal() {
     total = Math.round(total * 100) / 100
     document.getElementsByClassName('order-total-price')[0].innerText = '$' + total
 }
-
 
 
 //Adapted from: https://codesandbox.io/s/agitated-tu-97n1i?file=/index.js
