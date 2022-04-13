@@ -20,7 +20,7 @@ def index():
 
     if request.method == 'POST':
         Customer.create(rForm.cName.data, int(rForm.tableNum.data), randint(0, 200), int(rForm.restID.data))
-        return make_response(redirect('/order'))
+        return make_response(redirect('/validate'))
     return render_template('index.html', title="Boishii Mobile Menu | Home", form=rForm)
 
 
