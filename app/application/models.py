@@ -46,8 +46,6 @@ class Cook(db.Model): # fooditem inherits db.Model
 
     __tablename__ = 'Cook'
 
-    
-
     First_Name = db.Column(db.String(50), nullable = False)
     
     Last_Name = db.Column(db.String(50), nullable = False)
@@ -74,6 +72,7 @@ class Table(db.Model): # Table inherits db.Model
 
   
     WaiterID = db.Column(db.Integer, db.ForeignKey('Waiter.EmployeeID'))
+
     def __repr__(self):
         return f"Table('{self.TableNum}','{self.WaiterID}')"
 
@@ -118,7 +117,8 @@ class Order_Item(db.Model): # Order_Item inherits db.Model
 
     __tablename__ = 'Order_Item'
 
-    Item = db.Column(db.String(500),db.ForeignKey('Menu_Item.Name'), nullable = False)
+
+    Item = db.Column(db.String(500),db.ForeignKey('Menu_Item.Name'),primary_key = True, nullable = False)
 
 
     Quantity = db.Column(db.Integer, nullable = False, default = 1)
