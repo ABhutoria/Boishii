@@ -170,7 +170,7 @@ def removeItemToOrder():
 def createOrder():
 
     content = request.get_json()
-    ord = Order_Receipt(OrderNum = content["OrderNum"], ReceiptNum = content["ReceiptNum"] , TableNum = content["TableNum"])
+    ord = Order_Receipt(OrderNum = content["OrderNum"], ReceiptNum = receiptNum, TableNum = content["TableNum"])
     try:
         db.session.add(ord)
         db.session.commit()

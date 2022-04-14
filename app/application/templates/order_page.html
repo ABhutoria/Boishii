@@ -46,7 +46,7 @@
             <section class="cards">
                 {% for item in menu_items %}
                 <article class="card">
-                    <a href="#{{ item }}">
+                    <a href="#{{ item.Name }}">
                         <figure class="thumbnail">
                             <img src="static/img/{{ item.Image }}" alt="{{ item.Name }}">
                         </figure>
