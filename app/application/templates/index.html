@@ -6,6 +6,11 @@
 
 
 {% block body %}
+{% for message in get_flashed_messages() %}
+<div class="text-center">
+    <p class="alert">{{ message }}</p>
+</div>
+{% endfor %}
 <br />
 <h1 class="title_box">Boishii Mobile Menu</h1>
 <br />
@@ -50,7 +55,7 @@
             </ul>
         {% endif %}
         <p>
-            <input type="submit" class="submit_btn" value="Submit" onclick="validateID(form)">
+            <input type="submit" class="submit_btn" value="Submit">
         </p>
     </form>
 </div>

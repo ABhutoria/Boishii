@@ -1,9 +1,9 @@
 function validateID(form) {
-    var apiUrl = 'http://localhost:5000/validate'
+    var apiUrl = "http://localhost:5000/validate"
     console.log("HI");
-    fetch(apiUrl,{
+    fetch(apiUrl, {
     method: 'POST',
-    headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'http://localhost:5000/validate'},
+    headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({
         Name: form.cName.data,
         RestaurantID: parseInt(form.restID.data),

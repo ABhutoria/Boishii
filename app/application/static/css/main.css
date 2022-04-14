@@ -115,5 +115,19 @@ footer {
     color: white;
 }
 
+.alert {
+    padding: 12px;
+    border-radius: 3px;
+    font-size: 1.2rem;
+    margin: auto;
+    border-width: 2px;
+    border-style: solid;
+    border-color: darkred;
+    background-color: red;
+    color: white;
+    width: 30%;
+    text-align: center;
+}
+
 
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
