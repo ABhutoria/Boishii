@@ -1,10 +1,12 @@
 {% extends 'order_page.html' %}
 
 {% block cards %}
-<article class="card" onload="hey("pizza")">
-    <a href="#">
+
+{% for item in menu_items %}
+<article class="card" onload="hey()">
+    <a href="#"item>
         <figure class="thumbnail">
-            <img src="static/img/nachos.png" alt="Nachos">
+            <img src="{{ url_for('static', filename=item.Image) }}" alt="Nachos">
         </figure>
         <div class="card-content">
             <h2>Nachos</h2>
@@ -16,6 +18,7 @@
         </div>
     </a>
 </article>
+{% endfor %}
 <article class="card">
     <a href="#">
         <figure class="thumbnail">

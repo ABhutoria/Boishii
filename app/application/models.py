@@ -146,7 +146,7 @@ class Menu_Item(db.Model): # Menu_Item inherits db.Model
 
     Price = db.Column(db.Float, nullable = False)
     
-    Catagory = db.Column(db.String(200), nullable = False)
+    Category = db.Column(db.String(200), nullable = False)
 
     def __repr__(self):
         return f"Menu_Item('{self.Name}','{self.Description}', '{self.Image}','{self.Price}')"
