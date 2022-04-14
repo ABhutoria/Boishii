@@ -9,11 +9,11 @@
 
 
 
-fetch('http://localhost:5000/getItem',{
+/* fetch('http://localhost:5000/getItem',{
     method: 'GET',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({
         Name: "Pizza"
 })
 .then(resp => resp.json())
-.then(data => document.body.innerHTML = "<h1>" + data.type + "</h1>")
+.then(data => document.body.innerHTML = "<h1>" + data.type + "</h1>") */
