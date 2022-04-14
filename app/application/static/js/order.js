@@ -6,6 +6,7 @@ if (document.readyState == 'loading') {
     ready()
 }
 
+
 function ready() {
     var removeOrderItemButtons = document.getElementsByClassName('btn-danger')
     for (var i = 0; i < removeOrderItemButtons.length; i++) {
@@ -27,6 +28,27 @@ function ready() {
     }
 
     document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked)
+
+    /* var orderItems2 = document.getElementsByClassName('order-item')
+    for (var i = 0; i < orderItems2.length; i++) {
+        var itemSrc = document.getElementsByClassName('order-item-image')[i]
+        var price = document.getElementsByClassName('order-price')[i]
+        var title = document.getElementsByClassName('order-item-title')[i]
+        var orderRowContents = `
+        <div class="order-item order-column">
+            <img class="order-item-image" src="${itemSrc}" width="100" height="100">
+            <span class="order-item-title">${title}</span>
+        </div>
+        <span class="order-price order-column">${price}</span>
+        <div class="order-quantity order-column">
+            <input class="order-quantity-input" type="number" value="1">
+            <button class="btn btn-danger" type="button">REMOVE</button>
+        </div>`
+        orderRow.innerHTML = orderRowContents
+        //orderItems.append(orderRow)
+        orderRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeOrderItem)
+        orderRow.getElementsByClassName('order-quantity-input')[0].addEventListener('change', quantityChanged)
+    } */
 }
 
 function purchaseClicked() {
@@ -59,7 +81,7 @@ function addToOrderClicked(event) {
     var orderItem = button.parentElement.parentElement
     var title = orderItem.getElementsByClassName('card-name')[0].innerText
     var price = orderItem.getElementsByClassName('card-price')[0].innerText
-    var imageSrc = orderItem.getElementsByClassName('thumbnail')[0].src
+    var imageSrc = orderItem.getElementsByClassName('image')[0].src
     addItemToOrder(title, price, imageSrc)
     updateOrderTotal()
 }
@@ -89,6 +111,15 @@ function addItemToOrder(title, price, imageSrc) {
     orderItems.append(orderRow)
     orderRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeOrderItem)
     orderRow.getElementsByClassName('order-quantity-input')[0].addEventListener('change', quantityChanged)
+    fetch("http://localhost:5000/addItem", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin':'http://localhost:5000/addItem'},
+        body: JSON.stringify({
+            "Quantity" : 1,
+            "OrderNum" : 1,
+            "Name": title
+        })
+    })
 }
 
 function updateOrderTotal() {

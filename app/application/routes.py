@@ -1,5 +1,6 @@
 from flask import Flask, make_response, render_template, url_for, request, redirect, flash
 from flask import current_app as app
+from flask_cors import CORS, cross_origin
 from sqlalchemy import null
 from .forms import RestaurantForm
 from .__init__ import *
@@ -117,6 +118,7 @@ def getItem():
 #   "Name": "Pizza"
 # }
 @app.route('/addItem', methods = ["POST"])
+@cross_origin()
 def addItemToOrder():
     try:
         content = request.get_json()
