@@ -18,9 +18,9 @@ orderNum = 0
 @cross_origin()
 def index():
     #DEV
-    db.drop_all()
-    db.create_all()
-    db_init(db)
+    #db.drop_all()
+    #db.create_all()
+    #db_init(db)
     
     rForm = RestaurantForm()        
 
