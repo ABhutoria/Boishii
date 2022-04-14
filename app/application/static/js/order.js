@@ -69,7 +69,7 @@ function addItemToOrder(title, price, imageSrc) {
     var orderItemNames = orderItems.getElementsByClassName('order-item-title')
     for (var i = 0; i < orderItemNames.length; i++) {
         if (orderItemNames[i].innerText == title) {
-            alert('This item is already added to the cart')
+            alert('This item is already added to the order')
             return
         }
     }
