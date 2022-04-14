@@ -2,7 +2,6 @@ let orderNum = 0;
 
 function validateID(form) {
     var apiUrl = "http://localhost:5000/validate"
-    console.log("HI");
     fetch(apiUrl, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -23,17 +22,17 @@ function validateID(form) {
 
 }
 
-function makeOrder(form) {
+function makeOrder(form){
     orderNum += 1;
-    fetch("http://localhost:5000/createOrder", {
+    var tableNum = form.tableNum.data;
+    fetch('http://localhost:5000/createOrder',{
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-            "OrderNum" : orderNum,
-            "ReceiptNum": 0,
-            "TableNum" : form.tableNum
-    })
+            "OrderNum": orderNum,
+            "TableNum": tableNum
+        })
     }).catch(err => {
-        console.log(err);
-    });
+        console.log(err)
+    })
 }

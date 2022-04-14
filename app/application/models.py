@@ -90,8 +90,19 @@ class Order_Receipt(db.Model): # Order Receipt inherits db.Model
 
     Total_Price = db.Column(db.Float, default = 0)
 
-   
     TableNum = db.Column(db.Integer, db.ForeignKey('Table.TableNum'))
+
+    def __init__(self, orderNum: str, receiptNum: int, totalPrice: float, tableNum: int):
+       self.OrderNum = orderNum
+       self.TableNum = tableNum
+       self.ReceiptNum = receiptNum
+       self.Total_Price = totalPrice
+
+    @staticmethod
+    def create(orderNum, receiptNum, totalPrice, tableNum):
+       newO = Order_Receipt(orderNum, receiptNum, totalPrice, tableNum)
+       db.session.add(newO)
+       db.session.commit()
 
     def __repr__(self):
         return f"Order_Receipt('{self.OrderNum}','{self.ReceiptNum}','{self.Total_Price}', '{self.TableNum})" #TableNum is a foreignKey

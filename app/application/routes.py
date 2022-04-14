@@ -9,6 +9,7 @@ import json
 #import requests
 
 receiptNum = 0
+orderNum = 0
 
 @app.route('/', methods = ['POST', 'GET'])
 @app.route('/home')
@@ -26,21 +27,13 @@ def index():
     if request.method == 'POST':
         managerExists = db.session.query(Manager.Validation_Code).filter_by(Validation_Code = rForm.restID.data).first() is not None
         if (managerExists):
-            Customer.create(rForm.cName.data, int(rForm.tableNum.data), incrReceiptNum(), int(rForm.restID.data))
+            incrReceiptNum()
+            incrOrderNum()
+            Customer.create(rForm.cName.data, int(rForm.tableNum.data), receiptNum, int(rForm.restID.data))
+            Order_Receipt.create(orderNum, receiptNum, float(0), int(rForm.tableNum.data))
             return redirect(url_for('order_page'))
         else:
             flash("Invalid Restaurant ID")
-        
-        
-        #url = 'http://localhost:5000/validate'
-        #headers = {'Content-Type': 'application/json'}
-        #params = {'RestaurantID':rForm.restID.data}
-        #response = requests.get(url, headers = headers, data = params)
-        #print(response.text)
-        #if response.json() == "True":
-        #    return render_template("appetizers.html", title="Boishii Mobile Menu | Appetizers")
-        #else:
-        #    return render_template('index.html', title="Boishii Mobile Menu | Home", form=rForm)
     return render_template('index.html', title="Boishii Mobile Menu | Home", form=rForm)
 
 @app.route('/order', methods=["GET"])
@@ -85,6 +78,11 @@ def incrReceiptNum():
     global receiptNum
     receiptNum += 1
     return receiptNum
+
+def incrOrderNum():
+    global orderNum
+    orderNum += 1
+    return orderNum
 
 #API to retieve menu items from database
 # Example input: 
@@ -155,10 +153,6 @@ def removeItemToOrder():
         return "-1" #if cannot remove item return -1
 
 
-
-
-
-
 #API to create the order
 # Example input: 
 # {
@@ -178,8 +172,6 @@ def createOrder():
     except:
         return "-1"
     
-
-
 
 #API delete order from order Database
 # Example input: 
