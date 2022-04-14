@@ -18,9 +18,9 @@ orderNum = 0
 @cross_origin()
 def index():
     #DEV
-    db.drop_all()
-    db.create_all()
-    db_init(db)
+    # db.drop_all()
+    # db.create_all()
+    # db_init(db)
     
     rForm = RestaurantForm()        
 
@@ -31,6 +31,11 @@ def index():
         if (managerExists):
             incrReceiptNum()
             incrOrderNum()
+
+            custExists = db.session.query(Customer).filter_by(Name = rForm.cName.data).first() is not None
+            if( custExists):
+                flash("Customer Name Taken")
+                return render_template('index.html', title="Boishii Mobile Menu | Home", form=rForm)
             Customer.create(rForm.cName.data, int(rForm.tableNum.data), receiptNum, int(rForm.restID.data))
             Order_Receipt.create(orderNum, receiptNum, float(0), int(rForm.tableNum.data))
             return redirect(url_for('order_page'))
