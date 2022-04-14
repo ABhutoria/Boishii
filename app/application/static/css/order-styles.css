@@ -72,7 +72,7 @@ body {
 
 .card {
 	background: white;
-	margin-bottom: 2em;	
+	margin-bottom: 2em;
 }
 
 .card a {
@@ -89,10 +89,9 @@ body {
 }
 
 .card-name {
-  margin-top: 0;
-	margin-bottom: .5em;
 	font-weight: normal;
-  padding: 1.4em;
+  padding-left: 1.4em;
+  padding-right: 1.4em;
 }
 
 .card-description {
@@ -102,7 +101,7 @@ body {
 
 .card-price {
   font-size: 95%;
-	padding: 1.4em;
+  text-align: center;
 }
 
 img {
