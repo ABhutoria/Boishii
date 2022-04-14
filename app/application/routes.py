@@ -43,11 +43,6 @@ def index():
         #    return render_template('index.html', title="Boishii Mobile Menu | Home", form=rForm)
     return render_template('index.html', title="Boishii Mobile Menu | Home", form=rForm)
 
-
-@app.route('/order', methods=["GET"])
-def order_page():
-    return render_template("appetizers.html", title="Boishii Mobile Menu | Order")
-
 #API to verify restaurantID
 # A json body will be received that will look something like 
 # {
