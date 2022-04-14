@@ -1,4 +1,4 @@
-from flask import Flask, make_response, render_template, url_for, request, redirect
+from flask import Flask, make_response, render_template, url_for, request, redirect, flash
 from flask import current_app as app
 from sqlalchemy import null
 from .forms import RestaurantForm
@@ -6,21 +6,41 @@ from .__init__ import *
 from .models import *
 from random import randint
 import json
+import requests
+
+receiptNum = 0
 
 @app.route('/', methods = ['POST', 'GET'])
 @app.route('/home')
 @app.route('/index')
 def index():
-    #//DEV
-    # db.drop_all()
-    # db.create_all()
-    # db_init(db)
+    #DEV
+    #db.drop_all()
+    #db.create_all()
+    #db_init(db)
     
     rForm = RestaurantForm()
+    global receiptNum
+        
 
     if request.method == 'POST':
-        Customer.create(rForm.cName.data, int(rForm.tableNum.data), randint(0, 200), int(rForm.restID.data))
-        return make_response(redirect('/order'))
+        managerExists = db.session.query(Manager.Validation_Code).filter_by(Validation_Code = rForm.restID.data).first() is not None
+        if (managerExists):
+            Customer.create(rForm.cName.data, int(rForm.tableNum.data), incrReceiptNum(), int(rForm.restID.data))
+            return redirect(url_for('order_page'))
+        else:
+            flash("Invalid Restaurant ID")
+        
+        
+        #url = 'http://localhost:5000/validate'
+        #headers = {'Content-Type': 'application/json'}
+        #params = {'RestaurantID':rForm.restID.data}
+        #response = requests.get(url, headers = headers, data = params)
+        #print(response.text)
+        #if response.json() == "True":
+        #    return render_template("appetizers.html", title="Boishii Mobile Menu | Appetizers")
+        #else:
+        #    return render_template('index.html', title="Boishii Mobile Menu | Home", form=rForm)
     return render_template('index.html', title="Boishii Mobile Menu | Home", form=rForm)
 
 
@@ -33,14 +53,40 @@ def order_page():
 # {
 #      "RestaurantID": 1234
 # }
-@app.route('/validate', methods = ["GET"])
+@app.route('/validate', methods=["POST"])
 def validate():
     content = request.get_json()
     managerExists = db.session.query(Manager.Validation_Code).filter_by(Validation_Code = content["RestaurantID"]).first() is not None
+    print(managerExists)
     if (managerExists == False):
         return "False"
+    Customer.create(content["Name"], int(content["TableNum"]), incrReceiptNum(), int(content["RestaurantID"]))
     return "True"
 
+def incrReceiptNum():
+    global receiptNum
+    receiptNum += 1
+    return receiptNum
+
+@app.route('/order', methods=["GET"])
+def order_page():
+    return render_template("appetizers.html", title="Boishii Mobile Menu | Order")
+
+@app.route('/Appetizers', methods=["GET"])
+def appetizers():
+    return render_template("appetizers.html", title="Boishii Mobile Menu | Appetizers")
+
+@app.route('/Main_Courses', methods=["GET"])
+def main_courses():
+    return render_template("main_courses.html", title="Boishii Mobile Menu | Main Courses")
+
+@app.route('/Dessert', methods=["GET"])
+def dessert():
+    return render_template("dessert.html", title="Boishii Mobile Menu | Dessert")
+
+@app.route('/Drinks', methods=["GET"])
+def drinks():
+    return render_template("drinks.html", title="Boishii Mobile Menu | Drinks")
 
 #API to retieve menu items from database
 # Example input: 
