@@ -6,7 +6,7 @@ from .__init__ import *
 from .models import *
 from random import randint
 import json
-import requests
+#import requests
 
 receiptNum = 0
 
@@ -43,10 +43,27 @@ def index():
         #    return render_template('index.html', title="Boishii Mobile Menu | Home", form=rForm)
     return render_template('index.html', title="Boishii Mobile Menu | Home", form=rForm)
 
-
 @app.route('/order', methods=["GET"])
 def order_page():
     return render_template("appetizers.html", title="Boishii Mobile Menu | Order")
+
+@app.route('/Appetizers', methods=["GET"])
+def appetizers():
+    return render_template("appetizers.html", title="Boishii Mobile Menu | Appetizers")
+
+@app.route('/Main_Courses', methods=["GET"])
+def main_courses():
+    return render_template("main_courses.html", title="Boishii Mobile Menu | Main Courses")
+
+@app.route('/Dessert', methods=["GET"])
+def dessert():
+    return render_template("dessert.html", title="Boishii Mobile Menu | Dessert")
+
+@app.route('/Drinks', methods=["GET"])
+def drinks():
+    return render_template("drinks.html", title="Boishii Mobile Menu | Drinks")
+
+
 
 #API to verify restaurantID
 # A json body will be received that will look something like 
@@ -68,32 +85,12 @@ def incrReceiptNum():
     receiptNum += 1
     return receiptNum
 
-@app.route('/order', methods=["GET"])
-def order_page():
-    return render_template("appetizers.html", title="Boishii Mobile Menu | Order")
-
-@app.route('/Appetizers', methods=["GET"])
-def appetizers():
-    return render_template("appetizers.html", title="Boishii Mobile Menu | Appetizers")
-
-@app.route('/Main_Courses', methods=["GET"])
-def main_courses():
-    return render_template("main_courses.html", title="Boishii Mobile Menu | Main Courses")
-
-@app.route('/Dessert', methods=["GET"])
-def dessert():
-    return render_template("dessert.html", title="Boishii Mobile Menu | Dessert")
-
-@app.route('/Drinks', methods=["GET"])
-def drinks():
-    return render_template("drinks.html", title="Boishii Mobile Menu | Drinks")
-
 #API to retieve menu items from database
 # Example input: 
 # {
 #      "Name": "Pizza"
 # }
-@app.route('/getItem', methods = ["GET"])
+@app.route('/getItem', methods = ["POST"])
 def getItem():
    
     content = request.get_json()
