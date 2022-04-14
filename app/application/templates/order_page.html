@@ -44,8 +44,21 @@
     <main class="main-area">
         <div class="centered">
             <section class="cards">
-                {% block cards %}
-                {% endblock %}
+                {% for item in menu_items %}
+                <article class="card">
+                    <a href="#{{ item }}">
+                        <figure class="thumbnail">
+                            <img src="static/img/{{ item.Image }}" alt="{{ item.Name }}">
+                        </figure>
+                        <div class="card-content">
+                            <h2>{{ item.Name }}</h2>
+                            <p id = "{{ item.Name }}">
+                                {{ item.Description }}
+                            </p>
+                        </div>
+                    </a>
+                </article>
+                {% endfor %}
             </section>
         </div>
     </main>

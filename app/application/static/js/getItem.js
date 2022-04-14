@@ -19,7 +19,7 @@
 .then(data => document.body.innerHTML = "<h1>" + data.type + "</h1>") */
 
 
-function hey(){
+function hey(item){
 
     fetch('http://localhost:5000/getItem',{
         method: 'POST',

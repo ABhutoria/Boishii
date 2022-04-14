@@ -44,30 +44,25 @@ def index():
     return render_template('index.html', title="Boishii Mobile Menu | Home", form=rForm)
 
 @app.route('/order', methods=["GET"])
+@app.route('/Appetizers')
 def order_page():
     appies = db.session.query(Menu_Item).filter_by(Category = "Appetizer").all()
-    print(appies)
-    return render_template("appetizers.html", title="Boishii Mobile Menu | Order", menu_items=appies)
-
-@app.route('/Appetizers', methods=["GET"])
-def appetizers():
-    appies = db.session.query(Menu_Item).filter_by(Category = "Appetizer").all()
-    return render_template("appetizers.html", title="Boishii Mobile Menu | Appetizers", menu_items=appies)
+    return render_template("order_page.html", title="Boishii Mobile Menu | Order", menu_items=appies)
 
 @app.route('/Main_Courses', methods=["GET"])
 def main_courses():
     mains = db.session.query(Menu_Item).filter_by(Category = "Main").all()
-    return render_template("main_courses.html", title="Boishii Mobile Menu | Main Courses", menu_items=mains)
+    return render_template("order_page.html", title="Boishii Mobile Menu | Main Courses", menu_items=mains)
 
 @app.route('/Dessert', methods=["GET"])
 def dessert():
     desserts = db.session.query(Menu_Item).filter_by(Category = "Dessert").all()
-    return render_template("dessert.html", title="Boishii Mobile Menu | Dessert", menu_items=desserts)
+    return render_template("order_page.html", title="Boishii Mobile Menu | Dessert", menu_items=desserts)
 
 @app.route('/Drinks', methods=["GET"])
 def drinks():
     drinks = db.session.query(Menu_Item).filter_by(Category = "Drink").all()
-    return render_template("drinks.html", title="Boishii Mobile Menu | Drinks", menu_items=drinks)
+    return render_template("order_page.html", title="Boishii Mobile Menu | Drinks", menu_items=drinks)
 
 
 
@@ -375,79 +370,79 @@ def db_init(db):
 
     #pho
 
-    pho = Menu_Item(Name = "Pho", Description ="Its pho, you just cant miss, just buy it already", Image ="pho.jpeg",Price = 10.99,Category = "Main")
+    pho = Menu_Item(Name = "Pho", Description ="Its pho, you just cant miss, just buy it already", Image ="pho.jpg",Price = 10.99,Category = "Main")
     db.session.add(pho)
 
 
 
     #Pizza
-    pizza = Menu_Item(Name = "Pizza", Description ="Its italian pizza ", Image ="pizza.jpeg",Price = 16.99,Category = "Main")
+    pizza = Menu_Item(Name = "Pizza", Description ="Its italian pizza ", Image ="pizza.jpg",Price = 16.99,Category = "Main")
     db.session.add(pizza)
 
 
     #Butter Chicken
-    butterChicken = Menu_Item(Name = "Butter Chicken", Description ="spicy food", Image ="butter-chicken.jpeg",Price = 13.99,Category = "Main")
+    butterChicken = Menu_Item(Name = "Butter Chicken", Description ="spicy food", Image ="butter-chicken.jpg",Price = 13.99,Category = "Main")
     db.session.add(butterChicken)
 
     #Garlic Naan
 
-    garlicNaan = Menu_Item(Name = "Garlic Naan", Description ="indian bread", Image ="garlicNaan.jpeg",Price = 12.99,Category = "Main")
+    garlicNaan = Menu_Item(Name = "Garlic Naan", Description ="indian bread", Image ="garlicNaan.jpg",Price = 12.99,Category = "Main")
     db.session.add(garlicNaan)
 
     #Biranyi 
 
-    biryani = Menu_Item(Name = "Biryani", Description ="indian rice", Image ="briyani.jpeg",Price = 19.99,Category = "Main")
+    biryani = Menu_Item(Name = "Biryani", Description ="indian rice", Image ="briyani.jpg",Price = 19.99,Category = "Main")
     db.session.add(biryani)
 
     #Steak
 
-    steak = Menu_Item(Name = "Steak", Description ="MEAT", Image ="steak.jpeg",Price = 43.99,Category = "Main")
+    steak = Menu_Item(Name = "Steak", Description ="MEAT", Image ="steak.jpg",Price = 43.99,Category = "Main")
     db.session.add(steak)
     
     
     # Unfortuantely Fish and chips 
 
-    fishChips = Menu_Item(Name = "Fish and Chips", Description ="fish with fries", Image ="fishNChips.jpeg",Price = 25.99,Category = "Main")
+    fishChips = Menu_Item(Name = "Fish and Chips", Description ="fish with fries", Image ="fishNChips.jpg",Price = 25.99,Category = "Main")
     db.session.add(fishChips)
 
     # Shawarma 
 
-    shawarma = Menu_Item(Name = "Chicken Shawarma", Description ="the best wrap you will ever eat, buy it", Image ="chickenShawarma.jpeg",Price = 12.99,Category = "Main")
+    shawarma = Menu_Item(Name = "Chicken Shawarma", Description ="the best wrap you will ever eat, buy it", Image ="chickenShawarma.jpg",Price = 12.99,Category = "Main")
     db.session.add(shawarma)
 
 
     db.session.commit()
     #Dessert
     
-    chocolateCake = Menu_Item(Name = "Chocolate Cake", Description ="Cake, just eat it", Image ="chocoCake.jpeg",Price = 12.99,Category = "Dessert")
+    chocolateCake = Menu_Item(Name = "Chocolate Cake", Description ="Cake, just eat it", Image ="chocoCake.jpg",Price = 12.99,Category = "Dessert")
     db.session.add(chocolateCake)
 
-    waffle = Menu_Item(Name = "Waffles", Description ="Waffles with fruit", Image ="waffle.jpeg",Price = 16.99,Category = "Dessert")
+    waffle = Menu_Item(Name = "Waffles", Description ="Waffles with fruit", Image ="waffle.jpg",Price = 16.99,Category = "Dessert")
     db.session.add(waffle)
 
 
-    crepe = Menu_Item(Name = "Crepes", Description ="Crepes with fruit", Image ="crepe.jpeg",Price = 17.99,Category = "Dessert")
+    crepe = Menu_Item(Name = "Crepes", Description ="Crepes with fruit", Image ="crepe.jpg",Price = 17.99,Category = "Dessert")
     db.session.add(crepe)
 
-    fondue = Menu_Item(Name = "Fondue", Description ="Fondue with fruit", Image ="fondue.jpeg",Price = 24.99,Category = "Dessert")
+    fondue = Menu_Item(Name = "Fondue", Description ="Fondue with fruit", Image ="fondue.jpg",Price = 24.99,Category = "Dessert")
     db.session.add(fondue)
 
     db.session.commit()
 
     #Drinks
 
-    coke = Menu_Item(Name = "Coca-Cola", Description ="it is a sweet liquid", Image="coke.jpeg",Price = 2.99,Category = "Drink")
+    coke = Menu_Item(Name = "Coca-Cola", Description ="it is a sweet liquid", Image="coke.jpg",Price = 2.99,Category = "Drink")
     db.session.add(coke)
 
-    pepsi = Menu_Item(Name = "Pepsi", Description ="drink it", Image="pepsi.jpeg",Price = 2.99,Category = "Drink")
+    pepsi = Menu_Item(Name = "Pepsi", Description ="drink it", Image="pepsi.jpg",Price = 2.99,Category = "Drink")
     db.session.add(pepsi)
 
-    guinness = Menu_Item(Name = "guinness", Description ="drink the head, feel the lead", Image="guinness.jpeg",Price = 12.99,Category = "Drink")
+    guinness = Menu_Item(Name = "guinness", Description ="drink the head, feel the lead", Image="guinness.jpg",Price = 12.99,Category = "Drink")
     db.session.add(guinness)
 
 
 
-    absinthe = Menu_Item(Name = "Absinthe", Description ="For the Bold", Image="absinthe.jpeg",Price = 12.99,Category = "Drink")
+    absinthe = Menu_Item(Name = "Absinthe", Description ="For the Bold", Image="absinthe.jpg",Price = 12.99,Category = "Drink")
     db.session.add(absinthe)
 
 
