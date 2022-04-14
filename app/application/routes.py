@@ -18,7 +18,7 @@ def index():
     #DEV
     #db.drop_all()
     #db.create_all()
-    #db_init(db)
+    #b_init(db)
     
     rForm = RestaurantForm()
     global receiptNum
