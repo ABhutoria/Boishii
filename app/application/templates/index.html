@@ -1,62 +1,67 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{title}}</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="styleSheet" href = "{{ url_for('static', filename = 'css/main.css') }}">
+    <script src="{{ url_for('static', filename = 'js/validate.js') }}" async></script>
+</head>
 
-{% block head %}
+<body>
+    {% for message in get_flashed_messages() %}
+    <div class="text-center">
+        <p class="alert">{{ message }}</p>
+    </div>
+    {% endfor %}
+    <br />
+    <h1 class="title_box">Boishii Mobile Menu</h1>
+    <br />
+    <br />
+    <div class="boishii_form">
+        <form class="text-center" method="POST" action="/">
+            {{ form.csrf_token }}
+            <p>{{ form.cName.label }}</p>
+            <p>{{ form.cName(class="input_box") }}</p>
 
-{% endblock %}
+            {% if form.cName.errors %}
+                <ul class="errors">
+                    {% for error in form.cName.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
 
+            <p>
+                {{ form.tableNum.label }}
+            </p>
+            {{ form.tableNum(class="input_box") }}
 
-{% block body %}
-{% for message in get_flashed_messages() %}
-<div class="text-center">
-    <p class="alert">{{ message }}</p>
-</div>
-{% endfor %}
-<br />
-<h1 class="title_box">Boishii Mobile Menu</h1>
-<br />
-<br />
-<div class="boishii_form">
-    <form class="text-center" method="POST" action="/">
-        {{ form.csrf_token }}
-        <p>{{ form.cName.label }}</p>
-        <p>{{ form.cName(class="input_box") }}</p>
+            {% if form.tableNum.errors %}
+                <ul class="errors">
+                    {% for error in form.tableNum.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
 
-        {% if form.cName.errors %}
-            <ul class="errors">
-                {% for error in form.cName.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+            <p>
+                {{ form.restID.label }}
+            </p>
+            {{ form.restID(class="input_box") }}
 
-        <p>
-            {{ form.tableNum.label }}
-        </p>
-        {{ form.tableNum(class="input_box") }}
-
-        {% if form.tableNum.errors %}
-            <ul class="errors">
-                {% for error in form.tableNum.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-
-        <p>
-            {{ form.restID.label }}
-        </p>
-        {{ form.restID(class="input_box") }}
-
-        {% if form.restID.errors %}
-            <ul class="errors">
-                {% for error in form.restID.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-        <p>
-            <input type="submit" class="submit_btn" value="Submit">
-        </p>
-    </form>
-</div>
-{% endblock %}
+            {% if form.restID.errors %}
+                <ul class="errors">
+                    {% for error in form.restID.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <p>
+                <input type="submit" class="submit_btn" value="Submit">
+            </p>
+        </form>
+    </div>
+</body>
+</html>

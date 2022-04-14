@@ -15,16 +15,17 @@ orderNum = 0
 @app.route('/', methods = ['POST', 'GET'])
 @app.route('/home')
 @app.route('/index')
+@cross_origin()
 def index():
     #DEV
-    #db.drop_all()
-    #db.create_all()
-    #b_init(db)
+    db.drop_all()
+    db.create_all()
+    db_init(db)
     
-    rForm = RestaurantForm()
+    rForm = RestaurantForm()        
+
     global receiptNum
         
-
     if request.method == 'POST':
         managerExists = db.session.query(Manager.Validation_Code).filter_by(Validation_Code = rForm.restID.data).first() is not None
         if (managerExists):
@@ -39,21 +40,25 @@ def index():
 
 @app.route('/order', methods=["GET"])
 @app.route('/Appetizers')
+@cross_origin()
 def order_page():
     appies = db.session.query(Menu_Item).filter_by(Category = "Appetizer").all()
     return render_template("order_page.html", title="Boishii Mobile Menu | Order", menu_items=appies)
 
 @app.route('/Main_Courses', methods=["GET"])
+@cross_origin()
 def main_courses():
     mains = db.session.query(Menu_Item).filter_by(Category = "Main").all()
     return render_template("order_page.html", title="Boishii Mobile Menu | Main Courses", menu_items=mains)
 
 @app.route('/Dessert', methods=["GET"])
+@cross_origin()
 def dessert():
     desserts = db.session.query(Menu_Item).filter_by(Category = "Dessert").all()
     return render_template("order_page.html", title="Boishii Mobile Menu | Dessert", menu_items=desserts)
 
 @app.route('/Drinks', methods=["GET"])
+@cross_origin()
 def drinks():
     drinks = db.session.query(Menu_Item).filter_by(Category = "Drink").all()
     return render_template("order_page.html", title="Boishii Mobile Menu | Drinks", menu_items=drinks)
@@ -66,9 +71,10 @@ def drinks():
 #      "RestaurantID": 1234
 # }
 @app.route('/validate', methods=["POST"])
+@cross_origin()
 def validate():
     content = request.get_json()
-    managerExists = db.session.query(Manager.Validation_Code).filter_by(Validation_Code = content["RestaurantID"]).first() is not None
+    managerExists = db.session.query(Manager.Validation_Code).filter_by(Validation_Code = content["RestaurantID"]) is not None
     print(managerExists)
     if (managerExists == False):
         return "False"

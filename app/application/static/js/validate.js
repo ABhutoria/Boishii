@@ -1,14 +1,21 @@
 let orderNum = 0;
 
-function validateID(form) {
-    var apiUrl = "http://localhost:5000/validate"
-    fetch(apiUrl, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
+if (document.readyState == 'loading') {
+    document.addEventListener('DOMContentLoaded', ready)
+} else {
+    ready()
+}
+
+function ready() {
+}
+
+function validateID(restID) {
+    console.log(restID)
+    fetch("http://localhost:5000/validate", {
+    method: "POST",
+    headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin':'*'},
     body: JSON.stringify({
-        Name: form.cName.data,
-        RestaurantID: parseInt(form.restID.data),
-        TableNum: parseInt(form.tableNum.data)
+        "RestaurantID": parseInt(restID),
     })
     }).then(data => {
         console.log(data);
@@ -22,7 +29,7 @@ function validateID(form) {
 
 }
 
-function makeOrder(form){
+function makeOrder(){
     orderNum += 1;
     var tableNum = form.tableNum.data;
     fetch('http://localhost:5000/createOrder',{
