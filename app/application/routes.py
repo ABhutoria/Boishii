@@ -391,7 +391,8 @@ def db_init(db):
 
     #Biranyi 
 
-    biryani = Menu_Item(Name = "Biryani", Description ="indian rice", Image ="biryani.jpg",Price = 19.99,Category = "Main")
+
+    biryani = Menu_Item(Name = "Biryani", Description ="indian rice", Image ="biryani.jpeg",Price = 19.99,Category = "Main")
     db.session.add(biryani)
 
     #Steak
