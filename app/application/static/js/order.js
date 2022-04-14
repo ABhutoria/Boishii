@@ -111,3 +111,11 @@ function updateOrderTotal() {
 function toggleMobileMenu(menu) {
     menu.classList.toggle('open');
 }
+
+
+// function retrieveMenuItem(item){
+
+
+
+
+// }
