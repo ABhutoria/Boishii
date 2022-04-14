@@ -44,6 +44,10 @@ def index():
     return render_template('index.html', title="Boishii Mobile Menu | Home", form=rForm)
 
 
+@app.route('/order', methods=["GET"])
+def order_page():
+    return render_template("appetizers.html", title="Boishii Mobile Menu | Order")
+
 #API to verify restaurantID
 # A json body will be received that will look something like 
 # {
@@ -243,6 +247,35 @@ def getOrder():
         
     except:
         return "-1" #if error then return -1
+
+
+
+#API get Order from the database
+# Example input: 
+# {
+#   "OrderNum" : 123 
+#   "Name"     : Steak
+#   "Quantity" : 5  
+# }
+@app.route('/changeOrder', methods = ["GET"])
+def changeOrder():
+
+    content = request.get_json()
+
+    try: # remove all items in Order_Item with the input ordernumber 
+        item = db.session.query(Order_Item).filter_by(OrderNum = content["OrderNum"],Item = content["Name"]).first() 
+
+        item.Quantity = content["Quantity"]
+    
+        db.session.commit()
+    
+        return "Successfully changed quantity"   #if dict is notempty then return the dict otherwise return -1
+        
+        
+    except:
+        return "-1" #if order or item does not exist then return -1
+
+
 
 
 
