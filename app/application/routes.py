@@ -45,6 +45,8 @@ def index():
 
 @app.route('/order', methods=["GET"])
 def order_page():
+    appies = db.session.query(Menu_Item.Category).filter_by(Category = "Appetizer").first()
+    print(appies)
     return render_template("appetizers.html", title="Boishii Mobile Menu | Order")
 
 @app.route('/Appetizers', methods=["GET"])
