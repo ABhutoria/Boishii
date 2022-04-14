@@ -23,7 +23,7 @@ function ready() {
     var addToOrderButtons = document.getElementsByClassName('card')
     for (var i = 0; i < addToOrderButtons.length; i++) {
         var button = addToOrderButtons[i]
-        button.addEventListener('click', addToCartClicked)
+        button.addEventListener('click', addToOrderClicked)
     }
 
     document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked)
@@ -73,7 +73,7 @@ function addItemToOrder(title, price, imageSrc) {
             return
         }
     }
-    var cartRowContents = `
+    var OrderRowContents = `
         <div class="order-item order-column">
             <img class="order-item-image" src="${imageSrc}" width="100" height="100">
             <span class="order-item-title">${title}</span>
@@ -91,12 +91,12 @@ function addItemToOrder(title, price, imageSrc) {
 
 function updateOrderTotal() {
     var orderItemContainer = document.getElementsByClassName('order-items')[0]
-    var orderRows = cartItemContainer.getElementsByClassName('order-row')
+    var orderRows = orderItemContainer.getElementsByClassName('order-row')
     var total = 0
     for (var i = 0; i < orderRows.length; i++) {
         var orderRow = orderRows[i]
         var priceElement = orderRow.getElementsByClassName('order-price')[0]
-        var quantityElement = cartRow.getElementsByClassName('order-quantity-input')[0]
+        var quantityElement = orderRow.getElementsByClassName('order-quantity-input')[0]
         var price = parseFloat(priceElement.innerText.replace('$', ''))
         var quantity = quantityElement.value
         total = total + (price * quantity)

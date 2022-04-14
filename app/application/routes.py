@@ -6,7 +6,7 @@ from .__init__ import *
 from .models import *
 from random import randint
 import json
-import requests
+#import requests
 
 receiptNum = 0
 
@@ -43,26 +43,6 @@ def index():
         #    return render_template('index.html', title="Boishii Mobile Menu | Home", form=rForm)
     return render_template('index.html', title="Boishii Mobile Menu | Home", form=rForm)
 
-#API to verify restaurantID
-# A json body will be received that will look something like 
-# {
-#      "RestaurantID": 1234
-# }
-@app.route('/validate', methods=["POST"])
-def validate():
-    content = request.get_json()
-    managerExists = db.session.query(Manager.Validation_Code).filter_by(Validation_Code = content["RestaurantID"]).first() is not None
-    print(managerExists)
-    if (managerExists == False):
-        return "False"
-    Customer.create(content["Name"], int(content["TableNum"]), incrReceiptNum(), int(content["RestaurantID"]))
-    return "True"
-
-def incrReceiptNum():
-    global receiptNum
-    receiptNum += 1
-    return receiptNum
-
 @app.route('/order', methods=["GET"])
 def order_page():
     return render_template("appetizers.html", title="Boishii Mobile Menu | Order")
@@ -83,12 +63,34 @@ def dessert():
 def drinks():
     return render_template("drinks.html", title="Boishii Mobile Menu | Drinks")
 
+
+
+#API to verify restaurantID
+# A json body will be received that will look something like 
+# {
+#      "RestaurantID": 1234
+# }
+@app.route('/validate', methods=["POST"])
+def validate():
+    content = request.get_json()
+    managerExists = db.session.query(Manager.Validation_Code).filter_by(Validation_Code = content["RestaurantID"]).first() is not None
+    print(managerExists)
+    if (managerExists == False):
+        return "False"
+    Customer.create(content["Name"], int(content["TableNum"]), incrReceiptNum(), int(content["RestaurantID"]))
+    return "True"
+
+def incrReceiptNum():
+    global receiptNum
+    receiptNum += 1
+    return receiptNum
+
 #API to retieve menu items from database
 # Example input: 
 # {
 #      "Name": "Pizza"
 # }
-@app.route('/getItem', methods = ["GET"])
+@app.route('/getItem', methods = ["POST"])
 def getItem():
    
     content = request.get_json()
