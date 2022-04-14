@@ -50,10 +50,13 @@
                         <figure class="thumbnail">
                             <img src="static/img/{{ item.Image }}" alt="{{ item.Name }}">
                         </figure>
-                        <div class="card-content">
-                            <h2>{{ item.Name }}</h2>
-                            <p id = "{{ item.Name }}">
+                        <div>
+                            <h2 class="card-name">{{ item.Name }}</h2>
+                            <p class="card-description">
                                 {{ item.Description }}
+                            </p>
+                            <p class="card-price">
+                                {{ item.Price }}
                             </p>
                         </div>
                     </a>

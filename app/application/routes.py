@@ -17,8 +17,8 @@ orderNum = 0
 def index():
     #DEV
     #db.drop_all()
-        # db.create_all()
-        # db_init(db)
+    #db.create_all()
+    #db_init(db)
     
     rForm = RestaurantForm()
     global receiptNum
@@ -384,7 +384,7 @@ def db_init(db):
     #Biranyi 
 
 
-    biryani = Menu_Item(Name = "Biryani", Description ="indian rice", Image ="biryani.jpeg",Price = 19.99,Category = "Main")
+    biryani = Menu_Item(Name = "Biryani", Description ="indian rice", Image ="biryani.jpg",Price = 19.99,Category = "Main")
     db.session.add(biryani)
 
     #Steak
@@ -430,7 +430,7 @@ def db_init(db):
     pepsi = Menu_Item(Name = "Pepsi", Description ="drink it", Image="pepsi.jpg",Price = 2.99,Category = "Drink")
     db.session.add(pepsi)
 
-    guinness = Menu_Item(Name = "guinness", Description ="drink the head, feel the lead", Image="guinness.jpg",Price = 12.99,Category = "Drink")
+    guinness = Menu_Item(Name = "Guinness", Description ="drink the head, feel the lead", Image="guinness.jpg",Price = 12.99,Category = "Drink")
     db.session.add(guinness)
 
 
