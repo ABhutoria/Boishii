@@ -53,12 +53,14 @@ function quantityChanged(event) {
 }
 
 function addToOrderClicked(event) {
+    console.log("HELLO")
     var button = event.target
-    var shopItem = button.parentElement.parentElement
-    var title = shopItem.getElementsByClassName('card-content')[0].innerText
-    // var price = shopItem.getElementsByClassName('shop-item-price')[0].innerText
-    // var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
-    addItemToOrder(title, NULL, NULL)
+    console.log(button)
+    var orderItem = button.parentElement.parentElement
+    var title = orderItem.getElementsByClassName('card-name')[0].innerText
+    var price = orderItem.getElementsByClassName('card-price')[0].innerText
+    var imageSrc = orderItem.getElementsByClassName('thumbnail')[0].src
+    addItemToOrder(title, price, imageSrc)
     updateOrderTotal()
 }
 
@@ -73,7 +75,7 @@ function addItemToOrder(title, price, imageSrc) {
             return
         }
     }
-    var OrderRowContents = `
+    var orderRowContents = `
         <div class="order-item order-column">
             <img class="order-item-image" src="${imageSrc}" width="100" height="100">
             <span class="order-item-title">${title}</span>
