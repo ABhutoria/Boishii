@@ -17,10 +17,10 @@ orderNum = 0
 @app.route('/index')
 @cross_origin()
 def index():
-    #THE FIRST TIME IT RUNS, UNCOMMENT THIS, THEN RECOMMENT IT
-    # db.drop_all()
-    # db.create_all()
-    # db_init(db)
+    #AFTER RUNNING, COMMENT THIS
+    #db.drop_all()
+    #db.create_all()
+    #db_init(db)
     
     rForm = RestaurantForm()        
 
