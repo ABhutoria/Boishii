@@ -92,7 +92,7 @@ class Order_Receipt(db.Model): # Order Receipt inherits db.Model
 
     TableNum = db.Column(db.Integer, db.ForeignKey('Table.TableNum'))
 
-    def __init__(self, orderNum: str, receiptNum: int, totalPrice: float, tableNum: int):
+    def __init__(self, orderNum: int, receiptNum: int, totalPrice: float, tableNum: int):
        self.OrderNum = orderNum
        self.TableNum = tableNum
        self.ReceiptNum = receiptNum
