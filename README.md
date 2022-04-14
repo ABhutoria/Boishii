@@ -1,5 +1,5 @@
 # Boishii
-A Webapp for customers to order food at restaurants.
+A Webapp for customers to order food at restaurants. Note that the requirements assume Linux/Ubuntu environment.
 
 ### To install dependencies:
 
@@ -8,3 +8,5 @@ A Webapp for customers to order food at restaurants.
 ### To run dev
 
 ```python wsgi.py```
+OR
+```python3 wsgi.py```
