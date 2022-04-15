@@ -18,9 +18,9 @@ orderNum = 0
 @cross_origin()
 def index():
     #AFTER RUNNING, COMMENT THIS
-    #db.drop_all()
-    #db.create_all()
-    #db_init(db)
+    # db.drop_all()
+    # db.create_all()
+    # db_init(db)
     
     rForm = RestaurantForm()        
 
@@ -74,13 +74,17 @@ def drinks():
 # A json body will be received that will look something like 
 # {
 #      "RestaurantID": 1234
+#       "Name" : "Josh"
+#       "TableNum" : 4
 # }
 @app.route('/validate', methods=["POST"])
 @cross_origin()
 def validate():
     content = request.get_json()
-    managerExists = db.session.query(Manager.Validation_Code).filter_by(Validation_Code = content["RestaurantID"]) is not None
-    print(managerExists)
+    #managerExists = bool(db.session.query(Manager).filter_by(Validation_Code = content["RestaurantID"]))
+    managerExists = db.session.query(
+    db.session.query(Manager).filter_by(Validation_Code = content["RestaurantID"]).exists()
+    ).scalar()
     if (managerExists == False):
         return "False"
     Customer.create(content["Name"], int(content["TableNum"]), incrReceiptNum(), int(content["RestaurantID"]))
@@ -177,7 +181,7 @@ def removeItemToOrder():
 def createOrder():
 
     content = request.get_json()
-    ord = Order_Receipt(orderNum = content["OrderNum"], receiptNum = receiptNum, totalPrice = content["TotalPrice"], tableNum = content["TableNum"])
+    ord = Order_Receipt(orderNum = content["OrderNum"], receiptNum = receiptNum, totalPrice = 0, tableNum = content["TableNum"])
     try:
         db.session.add(ord)
         db.session.commit()
@@ -260,7 +264,7 @@ def getOrder():
 #   "Name"     : Steak
 #   "Quantity" : 5  
 # }
-@app.route('/changeOrder', methods = ["GET"])
+@app.route('/changeOrder', methods = ["POST"])
 def changeOrder():
 
     content = request.get_json()
